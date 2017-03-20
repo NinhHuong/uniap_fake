@@ -20,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -135,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean checkLogin() {
         for (AccountModel model : listAccount) {
             if (edtAccount.getText().toString().equals(model.getUsername())
-                    && edtAccount.getText().toString().equals(model.getUsername())) {
+                    && edtPassword.getText().toString().equals(model.getPassword())) {
                 return true;
             }
         }
