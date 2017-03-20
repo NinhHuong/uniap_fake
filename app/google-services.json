@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "293520338288",
+    "firebase_url": "https://uniap-fake-1b631.firebaseio.com",
+    "project_id": "uniap-fake-1b631",
+    "storage_bucket": "uniap-fake-1b631.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293520338288:android:c8a1d59f7873840f",
+        "android_client_info": {
+          "package_name": "com.example.bonz.uniap_fake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293520338288-rk2i58mo7qmgd5dbcgkg6k817ad3df8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-1g0qFR8ldeq80upN1L0pPapEF7qFIt4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293520338288-rk2i58mo7qmgd5dbcgkg6k817ad3df8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
