@@ -52,5 +52,10 @@
     <string name="default_subject"></string>
 
     <!--take attendance function-->
-    <string name="listClassOfToday">List class of today: </string>
+    <string name="txt_list_class_of_today">List class of today </string>
+    <string name="txt_list_class_of_date">List class of day </string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_save">Save</string>
+    <string name="txt_class">Class</string>
+    <string name="txt_slot">Slot</string>
 </resources>

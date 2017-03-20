@@ -1,10 +1,7 @@
 package com.example.bonz.uniap_fake.activity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,29 +11,28 @@ import android.widget.TextView;
 import com.example.bonz.uniap_fake.R;
 import com.example.bonz.uniap_fake.dbcontext.DBContext;
 import com.example.bonz.uniap_fake.model.AttendanceModel;
-import com.example.bonz.uniap_fake.model.ClassModel;
 import com.example.bonz.uniap_fake.model.LectureModel;
-import com.example.bonz.uniap_fake.model.SemesterModel;
-import com.example.bonz.uniap_fake.model.StudentModel;
-import com.example.bonz.uniap_fake.model.TeacherModel;
+import com.example.bonz.uniap_fake.other.Constanst;
 import com.example.bonz.uniap_fake.other.ListViewApdapter;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 public class TakeAttendanceActivity extends AppCompatActivity {
+
+    DateFormat KEY_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
     //database
     private DBContext dbContext;
 
-    private List<StudentModel> studentModelList;
     private List<AttendanceModel> attendanceModelList;
-    private boolean isTakeAvaiable;
+    private boolean isInTime;
     private LectureModel lectureModel;
 
-    private TextView tvClass;
-    private Button btnTake, btnSave;
+    private TextView tvClass, tvSlot;
+    private Button btnEdit, btnSave;
     private ListViewApdapter apdapter;
     private ListView listView;
     @Override
@@ -51,24 +47,35 @@ public class TakeAttendanceActivity extends AppCompatActivity {
         dbContext = DBContext.getInst();
         lectureModel = dbContext.getLectureModelById(lectureId);
         //update data
-        tvClass.setText("Class: " + lectureModel.getClassModel().getClassName());
-        isTakeAvaiable = isTakeAttendanceAvaiable(lectureModel.getSlot());
-        btnTake.setEnabled(isTakeAvaiable);
-        btnSave.setVisibility(View.INVISIBLE);
+        tvClass.setText(getResources().getString(R.string.txt_class) + ": " + lectureModel.getClassModel().getClassName());
+        tvSlot.setText(getResources().getString(R.string.txt_slot) + ": " + lectureModel.getSlot());
+//        isInTime = isInTime(lectureModel.getSlot());
+        isInTime = true;
+        btnEdit.setEnabled(isInTime);
+        boolean isEdited = false;
         attendanceModelList = dbContext.getAttendanceByLectureId(lectureId);
-        studentModelList = new ArrayList<>();
-        for(int i=0; i<attendanceModelList.size(); i++) {
-            studentModelList.add(attendanceModelList.get(i).getStudentModel());
+        for(AttendanceModel attendanceModel : attendanceModelList) {
+            if(attendanceModel.getIsAttendance() == true) {
+                isEdited = true;
+                break;
+            }
         }
-        apdapter = new ListViewApdapter(this, studentModelList, false);
+        if(isEdited) {
+            btnEdit.setVisibility(View.VISIBLE);
+            btnSave.setEnabled(false);
+            apdapter = new ListViewApdapter(this, attendanceModelList, false);
+        } else {
+            apdapter = new ListViewApdapter(this, attendanceModelList, true);
+        }
         listView.setAdapter(apdapter);
 
         //list
-        btnTake.setOnClickListener(new View.OnClickListener(){
+        btnEdit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                btnSave.setVisibility(View.VISIBLE);
-                apdapter = new ListViewApdapter(TakeAttendanceActivity.this, studentModelList, true);
+                btnSave.setEnabled(true);
+                btnEdit.setEnabled(false);
+                apdapter = new ListViewApdapter(TakeAttendanceActivity.this, attendanceModelList, isInTime);
                 listView.setAdapter(apdapter);
             }
         });
@@ -76,64 +83,60 @@ public class TakeAttendanceActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //
-                apdapter = new ListViewApdapter(TakeAttendanceActivity.this, studentModelList, false);
+                btnEdit.setEnabled(true);
+                btnEdit.setVisibility(View.VISIBLE);
+                btnSave.setEnabled(false);
+                apdapter = new ListViewApdapter(TakeAttendanceActivity.this, attendanceModelList, false);
                 listView.setAdapter(apdapter);
-                btnTake.setText("Edit");
             }
         });
     }
 
     private void init() {
         tvClass = (TextView) findViewById(R.id.tvClass);
-        btnTake = (Button) findViewById(R.id.btnTake);
+        tvSlot = (TextView) findViewById(R.id.tvSlot);
+        btnEdit = (Button) findViewById(R.id.btn_edit);
         listView = (ListView) findViewById(R.id.list_student);
         btnSave = (Button) findViewById(R.id.btn_save);
     }
 
-    private boolean isTakeAttendanceAvaiable(int slot) {
+    private boolean isInTime() {
         //only take attendance when this time in slot
         Date date = new Date();
-        int second = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
-        int start, end;
-        switch (slot){
-            case 1:
-                start = 7 * 3600 + 30 * 60;
-                end = 9 * 3600;
-                if(second <= end && second >= start)
-                    return true;
-                break;
-            case 2:
-                start = 9 * 3600 + 10 * 60;
-                end = 10 * 3600 + 40 * 60;
-                if(second <= end && second >= start)
-                    return true;
-                break;
-            case 3:
-                start = 10 * 3600 + 50 * 60;
-                end = 12 * 3600 + 20 * 60;
-                if(second <= end && second >= start)
-                    return true;
-                break;
-            case 4:
-                start = 12 * 3600 + 50 * 60;
-                end = 14 * 3600 + 20 * 60;
-                if(second <= end && second >= start)
-                    return true;
-                break;
-            case 5:
-                start = 14 * 3600 + 30 * 60;
-                end = 16 * 3600;
-                if(second <= end && second >= start)
-                    return true;
-                break;
-            case 6:
-                start = 16 * 3600 + 10 * 60;
-                end = 17 * 3600 + 40 * 60;
-                if(second <= end && second >= start)
-                    return true;
-                break;
+        try {
+            date = KEY_DATE_FORMAT.parse(lectureModel.getDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+
+        long current = (new Date()).getTime();
+        long time;
+        switch (lectureModel.getSlot()){
+            case 1:
+                date.setTime(Constanst.KEY_SLOT_1);
+                time = date.getTime();
+                return current >= time && current <= time + Constanst.KEY_TIME_ALLOWANCE + Constanst.KEY_SLOT_DURATION;
+            case 2:
+                date.setTime(Constanst.KEY_SLOT_2);
+                time = date.getTime();
+                return current >= time && current <= time + Constanst.KEY_TIME_ALLOWANCE + Constanst.KEY_SLOT_DURATION;
+            case 3:
+                date.setTime(Constanst.KEY_SLOT_3);
+                time = date.getTime();
+                return current >= time && current <= time + Constanst.KEY_TIME_ALLOWANCE + Constanst.KEY_SLOT_DURATION;
+            case 4:
+                date.setTime(Constanst.KEY_SLOT_4);
+                time = date.getTime();
+                return current >= time && current <= time + Constanst.KEY_TIME_ALLOWANCE + Constanst.KEY_SLOT_DURATION;
+            case 5:
+                date.setTime(Constanst.KEY_SLOT_5);
+                time = date.getTime();
+                return current >= time && current <= time + Constanst.KEY_TIME_ALLOWANCE + Constanst.KEY_SLOT_DURATION;
+            case 6:
+                date.setTime(Constanst.KEY_SLOT_6);
+                time = date.getTime();
+                return current >= time && current <= time + Constanst.KEY_TIME_ALLOWANCE + Constanst.KEY_SLOT_DURATION;
+            }
         return false;
     }
 

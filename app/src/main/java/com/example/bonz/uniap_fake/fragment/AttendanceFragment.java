@@ -1,5 +1,6 @@
 package com.example.bonz.uniap_fake.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,15 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
 import com.example.bonz.uniap_fake.R;
 import com.example.bonz.uniap_fake.activity.TakeAttendanceActivity;
 import com.example.bonz.uniap_fake.dbcontext.DBContext;
-import com.example.bonz.uniap_fake.model.ClassModel;
 import com.example.bonz.uniap_fake.model.LectureModel;
+import com.example.bonz.uniap_fake.other.Constanst;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,9 +42,8 @@ public class AttendanceFragment extends Fragment implements View.OnClickListener
     // TODO: Rename and change types of parameters
 //    private String mParam1;
 //    private String mParam2;
-    // database
-    private DBContext dbContext;
     private Button btnClass1, btnClass2, btnClass3, btnClass4, btnClass5, btnClass6;
+    private TextView tvDateOfLecture;
     private List<LectureModel> lectureModelList;
     private OnFragmentInteractionListener mListener;
 
@@ -79,11 +82,77 @@ public class AttendanceFragment extends Fragment implements View.OnClickListener
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         init();
+        tvDateOfLecture.setText(getResources().getString(R.string.txt_list_class_of_today) + " "
+                + Constanst.KEY_DATE_FORMAT.format(new Date()));
         setDefault();
-        //get all lecture of today
+        loadClassOfDate(Constanst.KEY_DATE_FORMAT.format(new Date()));
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(getContext(), TakeAttendanceActivity.class);
+        intent.putExtra("classId", 1);
+        switch (view.getId()) {
+            case R.id.btn_class1:
+                for(int i=0; i<lectureModelList.size(); i++) {
+                    if(lectureModelList.get(i).getSlot() == 1) {
+                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
+                    }
+                }
+                startActivity(intent);
+                break;
+            case R.id.btn_class2:
+                for(int i=0; i<lectureModelList.size(); i++) {
+                    if(lectureModelList.get(i).getSlot() == 2) {
+                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
+                    }
+                }
+                startActivity(intent);
+                break;
+            case R.id.btn_class3:
+                for(int i=0; i<lectureModelList.size(); i++) {
+                    if(lectureModelList.get(i).getSlot() == 3) {
+                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
+                    }
+                }
+                startActivity(intent);
+                break;
+            case R.id.btn_class4:
+                for(int i=0; i<lectureModelList.size(); i++) {
+                    if(lectureModelList.get(i).getSlot() == 4) {
+                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
+                    }
+                }
+                startActivity(intent);
+                break;
+            case R.id.btn_class5:
+                for(int i=0; i<lectureModelList.size(); i++) {
+                    if(lectureModelList.get(i).getSlot() == 5) {
+                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
+                    }
+                }
+                startActivity(intent);
+                break;
+            case R.id.btn_class6:
+                for(int i=0; i<lectureModelList.size(); i++) {
+                    if(lectureModelList.get(i).getSlot() == 6) {
+                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
+                    }
+                }
+                startActivity(intent);
+                break;
+            case R.id.txt_date_of_lecture:
+                showDatePickerDialog();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void loadClassOfDate(String date) {
         DBContext dbContext = DBContext.getInst();
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        lectureModelList = dbContext.getLectureModelByDate(df.format(new Date()));
+        lectureModelList = dbContext.getLectureModelByDate(date);
         if(lectureModelList != null && lectureModelList.size() > 0) {
             for(int i=0; i<lectureModelList.size(); i++) {
                 switch (lectureModelList.get(i).getSlot()) {
@@ -115,64 +184,45 @@ public class AttendanceFragment extends Fragment implements View.OnClickListener
                         break;
                 }
             }
+        } else {
+            setDefault();
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(getContext(), TakeAttendanceActivity.class);
-        intent.putExtra("classId", 1);
-        switch (view.getId()) {
-            case R.id.btn_class1:
-                for(int i=0; i<lectureModelList.size(); i++) {
-                    if(lectureModelList.get(i).getSlot() == 1) {
-                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
-                    }
-                }
-                break;
-            case R.id.btn_class2:
-                for(int i=0; i<lectureModelList.size(); i++) {
-                    if(lectureModelList.get(i).getSlot() == 2) {
-                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
-                    }
-                }
-                break;
-            case R.id.btn_class3:
-                for(int i=0; i<lectureModelList.size(); i++) {
-                    if(lectureModelList.get(i).getSlot() == 3) {
-                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
-                    }
-                }
-                break;
-            case R.id.btn_class4:
-                for(int i=0; i<lectureModelList.size(); i++) {
-                    if(lectureModelList.get(i).getSlot() == 4) {
-                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
-                    }
-                }
-                break;
-            case R.id.btn_class5:
-                for(int i=0; i<lectureModelList.size(); i++) {
-                    if(lectureModelList.get(i).getSlot() == 5) {
-                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
-                    }
-                }
-                break;
-            case R.id.btn_class6:
-                for(int i=0; i<lectureModelList.size(); i++) {
-                    if(lectureModelList.get(i).getSlot() == 6) {
-                        intent.putExtra("lectureId", lectureModelList.get(i).getId());
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-
-        startActivity(intent);
+    private void tvDateOfLectureOnClick() {
+        showDatePickerDialog();
+        setDefault();
+        loadClassOfDate(tvDateOfLecture.getText().toString().trim());
     }
+
+    Calendar myCalendar = Calendar.getInstance();
+    public void showDatePickerDialog(){
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar c = Calendar.getInstance();
+            if(c.get(Calendar.YEAR) == year && c.get(Calendar.MONTH) == monthOfYear && c.get(Calendar.DATE) == dayOfMonth) {
+                c.set(year, monthOfYear, dayOfMonth);
+                tvDateOfLecture.setText(getResources().getString(R.string.txt_list_class_of_today) + " "
+                        + Constanst.KEY_DATE_FORMAT.format(c.getTime()));
+            } else {
+                c.set(year, monthOfYear, dayOfMonth);
+                tvDateOfLecture.setText(getResources().getString(R.string.txt_list_class_of_date) + " "
+                        + Constanst.KEY_DATE_FORMAT.format(c.getTime()));
+            }
+
+            setDefault();
+            loadClassOfDate(Constanst.KEY_DATE_FORMAT.format(c.getTime()));
+        }
+    };
 
     private void init() {
+        tvDateOfLecture = (TextView) getView().findViewById(R.id.txt_date_of_lecture);
+        tvDateOfLecture.setOnClickListener(this);
         btnClass1 = (Button) getView().findViewById(R.id.btn_class1);
         btnClass1.setOnClickListener(this);
         btnClass2 = (Button) getView().findViewById(R.id.btn_class2);

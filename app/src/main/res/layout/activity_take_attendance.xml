@@ -11,25 +11,26 @@
     android:orientation="vertical"
     tools:context="com.example.bonz.uniap_fake.activity.TakeAttendanceActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvClass"
+        android:textColor="#000000"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="@string/txt_class" />
 
-        <TextView
-            android:id="@+id/tvClass"
-            android:textColor="#000000"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Class: " />
+    <TextView
+        android:id="@+id/tvSlot"
+        android:textColor="#000000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_slot" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Take attendance"
-            android:gravity="right"
-            android:id="@+id/btnTake"/>
-    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="@string/btn_edit"
+        android:id="@+id/btn_edit"/>
 
     <ListView
         android:layout_width="match_parent"
@@ -42,7 +43,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:id="@+id/btn_save"
-        android:text="Save"/>
+        android:text="@string/btn_save"/>
 
 </LinearLayout>
