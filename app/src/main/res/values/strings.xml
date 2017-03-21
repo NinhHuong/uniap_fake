@@ -42,12 +42,12 @@
     <string name="sat">Sat</string>
     <string name="sun">Sun</string>
 
-    <string name="slot1">slot1</string>
-    <string name="slot2">slot2</string>
-    <string name="slot3">slot3</string>
-    <string name="slot4">slot4</string>
-    <string name="slot5">slot5</string>
-    <string name="slot6">slot6</string>
+    <string name="slot1">Slot 1</string>
+    <string name="slot2">Slot 2</string>
+    <string name="slot3">Slot 3</string>
+    <string name="slot4">Slot 4</string>
+    <string name="slot5">Slot 5</string>
+    <string name="slot6">Slot 6</string>
 
     <string name="default_subject"></string>
 

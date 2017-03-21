@@ -11,4 +11,7 @@
 
     <!--take attendance function-->
     <dimen name="button_margin">10dp</dimen>
+
+    <dimen name="line_width">2dp</dimen>
+    <dimen name="lecture_text">17sp</dimen>
 </resources>

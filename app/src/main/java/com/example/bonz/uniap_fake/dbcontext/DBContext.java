@@ -5,8 +5,8 @@ import com.example.bonz.uniap_fake.model.AttendanceModel;
 import com.example.bonz.uniap_fake.model.ClassModel;
 import com.example.bonz.uniap_fake.model.LectureModel;
 import com.example.bonz.uniap_fake.model.SemesterModel;
-import com.example.bonz.uniap_fake.model.StudentOfClassModel;
 import com.example.bonz.uniap_fake.model.StudentModel;
+import com.example.bonz.uniap_fake.model.StudentOfClassModel;
 import com.example.bonz.uniap_fake.model.SubjectModel;
 import com.example.bonz.uniap_fake.model.SubjectOfClassModel;
 import com.example.bonz.uniap_fake.model.TeacherModel;
@@ -21,13 +21,12 @@ import io.realm.RealmResults;
  */
 
 public class DBContext {
-    private Realm realm;
+    private static DBContext inst;
+    public Realm realm;
 
     public DBContext() {
         realm = Realm.getDefaultInstance();
     }
-
-    private static DBContext inst;
 
     public static DBContext getInst() {
         if (inst == null) {
