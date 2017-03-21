@@ -45,7 +45,7 @@ public class NewsFragment extends Fragment {
 
     //
     private List<NewsModel> listNews = new ArrayList<>();
-    private ListView lvNews;
+    private RecyclerView recyclerViewNews;
     private NewsAdapter newsAdapter;
     //database
     private DBContext dbContext;
@@ -91,28 +91,19 @@ public class NewsFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_news, container, false);
 
         //set
-        lvNews = (ListView) view.findViewById(R.id.listview_news);
+        recyclerViewNews = (RecyclerView) view.findViewById(R.id.recycler_view_news);
+
 
         listNews = new ArrayList<NewsModel>();
         listNews = dbContext.getAllNews();
+        //adapter
+        newsAdapter = new NewsAdapter(listNews);
         Log.v("test","news "+listNews.toString());
 
-        //adapter
-        lvNews.setAdapter(new NewsAdapter(getContext(), listNews));
-
-        // Khi người dùng click vào các ListItem
-//        lvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-//
-//                Toast.makeText(getActivity(),"ok"+position,Toast.LENGTH_SHORT).show();
-//                NewsModel model = (NewsModel) lvNews.getItemAtPosition(position);
-//                Intent intent = new Intent(getActivity(), NewsInfoActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerViewNews.setLayoutManager(mLayoutManager);
+        recyclerViewNews.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewNews.setAdapter(newsAdapter);
 
         prepareNewsData();
         // Inflate the layout for this fragment
