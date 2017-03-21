@@ -38,3 +38,16 @@ captures/
 
 # Keystore files
 *.jks
+.idea/libraries/animated_vector_drawable_24_2_1.xml
+.idea/libraries/appcompat_v7_24_2_1.xml
+.idea/libraries/design_24_2_1.xml
+.idea/libraries/recyclerview_v7_24_2_1.xml
+.idea/libraries/support_annotations_24_2_1.xml
+.idea/libraries/support_compat_24_2_1.xml
+.idea/libraries/support_core_ui_24_2_1.xml
+.idea/libraries/support_core_utils_24_2_1.xml
+.idea/libraries/support_fragment_24_2_1.xml
+.idea/libraries/support_media_compat_24_2_1.xml
+.idea/libraries/support_v4_24_2_1.xml
+.idea/libraries/support_vector_drawable_24_2_1.xml
+.idea/vcs.xml

@@ -17,6 +17,7 @@ public class Constanst {
     public static long KEY_SLOT_6 = 58200000;
     public static long KEY_SLOT_DURATION = 5400000;
     public static long KEY_TIME_ALLOWANCE = 86400000;
-
+    public static int KEY_ROLL_STUDENT = 1;
+    public static int KEY_ROLL_TEACHER = 2;
 
 }

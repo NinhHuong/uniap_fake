@@ -272,6 +272,10 @@ public class DBContext {
         return realm.where(AttendanceModel.class).equalTo("id",id).findFirst();
     }
 
+    public List<AttendanceModel> getAttendanceBySemesterId(int id) {
+        return realm.where(AttendanceModel.class).equalTo("lectureModel.subjectOfClassModel.classModel.semesterModel.id",id).findAll();
+    }
+
     public List<AttendanceModel> getAttendanceByLectureId(int id) {
         return realm.where(AttendanceModel.class).equalTo("lectureModel.id",id).findAll();
     }
