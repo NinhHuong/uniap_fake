@@ -1,10 +1,11 @@
 package com.example.bonz.uniap_fake.other;
 
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.bonz.uniap_fake.R;
@@ -16,44 +17,53 @@ import java.util.List;
  * Created by bonz on 3/21/17.
  */
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
+public class NewsAdapter extends BaseAdapter {
 
     private List<NewsModel> listNews;
+    private LayoutInflater layoutInflater;
+    private Context context;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtTitleNews, txtDateNews;
-
-        public MyViewHolder(View view) {
-            super(view);
-            txtTitleNews = (TextView) view.findViewById(R.id.title_news);
-            txtDateNews = (TextView) view.findViewById(R.id.date_news);
-
-        }
-    }
-
-    public NewsAdapter(List<NewsModel> listNews) {
-        this.listNews = listNews;
+    public NewsAdapter(Context aContext,  List<NewsModel> list) {
+        this.context = aContext;
+        this.listNews = list;
+        layoutInflater = LayoutInflater.from(aContext);
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int i) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.news_list_row, parent, false);
-
-        return new MyViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(NewsAdapter.MyViewHolder myViewHolder, int i) {
-        NewsModel model = listNews.get(i);
-        //Log.v("test","NewsModel "+model.getTitle());
-        myViewHolder.txtTitleNews.setText(model.getTitle());
-        myViewHolder.txtDateNews.setText(model.getDate());
-
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return listNews.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return i;
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        ViewHolder holder;
+        if(view==null)
+            view = layoutInflater.inflate(R.layout.news_list_row, null);
+        holder = new ViewHolder();
+        holder.titleNews = (TextView)view.findViewById(R.id.title_news); // title
+        holder.dateNews = (TextView)view.findViewById(R.id.date_news); // artist name
+
+
+        // Setting all values in listview
+        NewsModel model = this.listNews.get(i);
+        holder.titleNews.setText(model.getTitle());
+        holder.dateNews.setText(model.getDate());
+
+        return view;
+    }
+
+    static class ViewHolder {
+        TextView titleNews;
+        TextView dateNews;
     }
 }

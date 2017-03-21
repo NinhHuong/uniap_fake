@@ -117,21 +117,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //function onClick
     private void onClickLogin(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-//        if (!edtAccount.getText().toString().equals("") && !edtPassword.getText().toString().equals("")) {
-//            if(checkLogin()){
-//                loadDataFromFirebase();
-//                Intent intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
-//            }else {
-//                Snackbar.make(v, "Account & Password Incorrect !!!", Snackbar.LENGTH_SHORT)
-//                        .setAction("Action", null).show();
-//            }
-//        } else {
-//            Snackbar.make(v, "Enter Account & Password please !!!", Snackbar.LENGTH_SHORT)
-//                    .setAction("Action", null).show();
-//        }
+        if (!edtAccount.getText().toString().equals("") && !edtPassword.getText().toString().equals("")) {
+            if(checkLogin()){
+                loadDataFromFirebase();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }else {
+                Snackbar.make(v, "Account & Password Incorrect !!!", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+            }
+        } else {
+            Snackbar.make(v, "Enter Account & Password please !!!", Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+        }
 
 
     }

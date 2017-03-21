@@ -1,18 +1,21 @@
 package com.example.bonz.uniap_fake.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.bonz.uniap_fake.R;
+import com.example.bonz.uniap_fake.activity.MainActivity;
+import com.example.bonz.uniap_fake.activity.NewsInfoActivity;
 import com.example.bonz.uniap_fake.dbcontext.DBContext;
 import com.example.bonz.uniap_fake.model.NewsModel;
 import com.example.bonz.uniap_fake.other.NewsAdapter;
@@ -42,7 +45,7 @@ public class NewsFragment extends Fragment {
 
     //
     private List<NewsModel> listNews = new ArrayList<>();
-    private RecyclerView recyclerViewNews;
+    private ListView lvNews;
     private NewsAdapter newsAdapter;
     //database
     private DBContext dbContext;
@@ -88,19 +91,28 @@ public class NewsFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_news, container, false);
 
         //set
-        recyclerViewNews = (RecyclerView) view.findViewById(R.id.recycler_view_news);
-
+        lvNews = (ListView) view.findViewById(R.id.listview_news);
 
         listNews = new ArrayList<NewsModel>();
         listNews = dbContext.getAllNews();
-        //adapter
-        newsAdapter = new NewsAdapter(listNews);
         Log.v("test","news "+listNews.toString());
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerViewNews.setLayoutManager(mLayoutManager);
-        recyclerViewNews.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewNews.setAdapter(newsAdapter);
+        //adapter
+        lvNews.setAdapter(new NewsAdapter(getContext(), listNews));
+
+        // Khi người dùng click vào các ListItem
+//        lvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+//
+//                Toast.makeText(getActivity(),"ok"+position,Toast.LENGTH_SHORT).show();
+//                NewsModel model = (NewsModel) lvNews.getItemAtPosition(position);
+//                Intent intent = new Intent(getActivity(), NewsInfoActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
 
         prepareNewsData();
         // Inflate the layout for this fragment
