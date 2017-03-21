@@ -28,10 +28,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.bonz.uniap_fake.R;
 import com.example.bonz.uniap_fake.dbcontext.DBContext;
 import com.example.bonz.uniap_fake.fragment.AttendanceFragment;
+import com.example.bonz.uniap_fake.fragment.AttendanceStudentFragment;
 import com.example.bonz.uniap_fake.fragment.HomeFragment;
 import com.example.bonz.uniap_fake.fragment.NotificationsFragment;
 import com.example.bonz.uniap_fake.fragment.SettingsFragment;
 import com.example.bonz.uniap_fake.fragment.TimetableFragment;
+import com.example.bonz.uniap_fake.model.AccountModel;
 import com.example.bonz.uniap_fake.model.AttendanceModel;
 import com.example.bonz.uniap_fake.model.ClassModel;
 import com.example.bonz.uniap_fake.model.LectureModel;
@@ -42,10 +44,12 @@ import com.example.bonz.uniap_fake.model.SubjectModel;
 import com.example.bonz.uniap_fake.model.SubjectOfClassModel;
 import com.example.bonz.uniap_fake.model.TeacherModel;
 import com.example.bonz.uniap_fake.other.CircleTransform;
+import com.example.bonz.uniap_fake.other.Constanst;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -70,8 +74,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtName, txtWebsite;
     private Toolbar toolbar;
     private FloatingActionButton fab;
+    private AccountModel accountModel;
     // toolbar titles respected to selected nav menu item
     private String[] activityTitles;
+    private DBContext dbContext;
 
     // flag to load home fragment when user presses back key
     private boolean shouldLoadHomeFragOnBackPress = true;
@@ -121,15 +127,23 @@ public class MainActivity extends AppCompatActivity {
             loadHomeFragment();
         }
 
+        dbContext = DBContext.getInst();
         createSampleData();
+        accountModel = dbContext.getAccountByID(2);
     }
 
     private void createSampleData() {
-        DBContext dbContext = DBContext.getInst();
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        //account
+        AccountModel accountModel1 = AccountModel.create(1, "huongntmse03077", "", 1);
+        AccountModel accountModel2 = AccountModel.create(2, "anhbt", "", 2);
+        dbContext.addAccount(accountModel1);
+        dbContext.addAccount(accountModel2);
         //semester
         SemesterModel ses1 = SemesterModel.create(1, "Spring 2017", "05/01/2017", "30/04/2017");
+        SemesterModel ses2 = SemesterModel.create(2, "Spring 2016", "05/01/2016", "30/04/2016");
         dbContext.addSemesterModel(ses1);
+        dbContext.addSemesterModel(ses2);
         //temp teacher
         TeacherModel teacher1 = TeacherModel.create(5, 3, "Bui", "Anh", "abc", "123", "TA123", null);
         dbContext.addTeacher(teacher1);
@@ -152,12 +166,15 @@ public class MainActivity extends AppCompatActivity {
         SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile");
         dbContext.addSubjectModel(sub);
         //subject of class
-        dbContext.addSubjectOfClassModel(SubjectOfClassModel.create(1, sub, class1, teacher1));
+        SubjectOfClassModel subOfClass1 = SubjectOfClassModel.create(1, sub, class1, teacher1);
+        dbContext.addSubjectOfClassModel(subOfClass1);
         //temp lecture
-        LectureModel lec1 = LectureModel.create(1, df.format(new Date()), 1, class1);
-        LectureModel lec2 = LectureModel.create(2, df.format(new Date()), 2, class1);
-        LectureModel lec3 = LectureModel.create(3, df.format(new Date()), 4, class1);
-        LectureModel lec4 = LectureModel.create(4, df.format(new Date()), 6, class1);
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        LectureModel lec1 = LectureModel.create(1, df.format(new Date()), 1, subOfClass1);
+        LectureModel lec2 = LectureModel.create(2, df.format(new Date()), 2, subOfClass1);
+        LectureModel lec3 = LectureModel.create(3, df.format(c.getTime()), 4, subOfClass1);
+        LectureModel lec4 = LectureModel.create(4, df.format(c.getTime()), 6, subOfClass1);
         dbContext.addLectureModel(lec1);
         dbContext.addLectureModel(lec2);
         dbContext.addLectureModel(lec3);
@@ -273,8 +290,13 @@ public class MainActivity extends AppCompatActivity {
                 return timetableFragment;
             case 2:
                 // attendance Fragment
-                AttendanceFragment attendanceFragment = new AttendanceFragment();
-                return attendanceFragment;
+                if(accountModel.getRoll() == Constanst.KEY_ROLL_STUDENT) {
+                    AttendanceStudentFragment attendanceStudentFragment = new AttendanceStudentFragment();
+                    return attendanceStudentFragment;
+                } else if(accountModel.getRoll() == Constanst.KEY_ROLL_TEACHER) {
+                    AttendanceFragment attendanceFragment = new AttendanceFragment();
+                    return attendanceFragment;
+                }
             case 3:
                 // notifications fragment
                 NotificationsFragment notificationsFragment = new NotificationsFragment();

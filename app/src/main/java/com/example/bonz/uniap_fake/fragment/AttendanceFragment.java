@@ -157,27 +157,27 @@ public class AttendanceFragment extends Fragment implements View.OnClickListener
             for(int i=0; i<lectureModelList.size(); i++) {
                 switch (lectureModelList.get(i).getSlot()) {
                     case 1:
-                        btnClass1.setText(lectureModelList.get(i).getClassModel().getClassName());
+                        btnClass1.setText(lectureModelList.get(i).getSubjectOfClassModel().getClassModel().getClassName());
                         btnClass1.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-                        btnClass2.setText(lectureModelList.get(i).getClassModel().getClassName());
+                        btnClass2.setText(lectureModelList.get(i).getSubjectOfClassModel().getClassModel().getClassName());
                         btnClass2.setVisibility(View.VISIBLE);
                         break;
                     case 3:
-                        btnClass3.setText(lectureModelList.get(i).getClassModel().getClassName());
+                        btnClass3.setText(lectureModelList.get(i).getSubjectOfClassModel().getClassModel().getClassName());
                         btnClass3.setVisibility(View.VISIBLE);
                         break;
                     case 4:
-                        btnClass4.setText(lectureModelList.get(i).getClassModel().getClassName());
+                        btnClass4.setText(lectureModelList.get(i).getSubjectOfClassModel().getClassModel().getClassName());
                         btnClass4.setVisibility(View.VISIBLE);
                         break;
                     case 5:
-                        btnClass5.setText(lectureModelList.get(i).getClassModel().getClassName());
+                        btnClass5.setText(lectureModelList.get(i).getSubjectOfClassModel().getClassModel().getClassName());
                         btnClass5.setVisibility(View.VISIBLE);
                         break;
                     case 6:
-                        btnClass6.setText(lectureModelList.get(i).getClassModel().getClassName());
+                        btnClass6.setText(lectureModelList.get(i).getSubjectOfClassModel().getClassModel().getClassName());
                         btnClass6.setVisibility(View.VISIBLE);
                         break;
                     default:
@@ -187,12 +187,6 @@ public class AttendanceFragment extends Fragment implements View.OnClickListener
         } else {
             setDefault();
         }
-    }
-
-    private void tvDateOfLectureOnClick() {
-        showDatePickerDialog();
-        setDefault();
-        loadClassOfDate(tvDateOfLecture.getText().toString().trim());
     }
 
     Calendar myCalendar = Calendar.getInstance();

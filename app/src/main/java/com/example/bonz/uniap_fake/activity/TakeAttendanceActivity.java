@@ -47,7 +47,7 @@ public class TakeAttendanceActivity extends AppCompatActivity {
         dbContext = DBContext.getInst();
         lectureModel = dbContext.getLectureModelById(lectureId);
         //update data
-        tvClass.setText(getResources().getString(R.string.txt_class) + ": " + lectureModel.getClassModel().getClassName());
+        tvClass.setText(getResources().getString(R.string.txt_class) + ": " + lectureModel.getSubjectOfClassModel().getClassModel().getClassName());
         tvSlot.setText(getResources().getString(R.string.txt_slot) + ": " + lectureModel.getSlot());
 //        isInTime = isInTime(lectureModel.getSlot());
         isInTime = true;

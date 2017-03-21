@@ -58,4 +58,5 @@
     <string name="btn_save">Save</string>
     <string name="txt_class">Class</string>
     <string name="txt_slot">Slot</string>
+    <string name="txt_semester">Semester: </string>
 </resources>

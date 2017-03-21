@@ -12,20 +12,24 @@ public class LectureModel extends RealmObject {
     private int id;
     private String date;
     private int slot;
-    private ClassModel classModel;
+    private SubjectOfClassModel subjectOfClassModel;
 
-    public static LectureModel create(int id, String date, int slot, ClassModel classModel) {
+    public static LectureModel create(int id, String date, int slot, SubjectOfClassModel subjectOfClassModel) {
         LectureModel lecture = new LectureModel();
         lecture.id = id;
         lecture.date = date;
         lecture.slot = slot;
-        lecture.classModel = classModel;
+        lecture.subjectOfClassModel = subjectOfClassModel;
 
         return lecture;
     }
 
-    public void setClassModel(ClassModel classModel) {
-        this.classModel = classModel;
+    public void setSubjectOfClassModel(SubjectOfClassModel subjectOfClassModel) {
+        this.subjectOfClassModel = subjectOfClassModel;
+    }
+
+    public SubjectOfClassModel getSubjectOfClassModel() {
+        return subjectOfClassModel;
     }
 
     public void setId(int id) {
@@ -38,10 +42,6 @@ public class LectureModel extends RealmObject {
 
     public void setSlot(int slot) {
         this.slot = slot;
-    }
-
-    public ClassModel getClassModel() {
-        return classModel;
     }
 
     public int getId() {
