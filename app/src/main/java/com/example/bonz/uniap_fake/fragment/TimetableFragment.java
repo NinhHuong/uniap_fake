@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bonz.uniap_fake.R;
+import com.example.bonz.uniap_fake.dbcontext.DBContext;
+import com.example.bonz.uniap_fake.model.LectureModel;
 import com.example.bonz.uniap_fake.model.TimetableEntity;
 
 import java.text.DateFormat;
@@ -104,7 +106,9 @@ public class TimetableFragment extends Fragment {
 
         // Inflate the layout for this fragment
 
-        List<TimetableEntity> timetableEntityList = sampleData();
+
+        DBContext dbContext = new DBContext();
+        List<LectureModel> timetableEntityList = dbContext.getAllLectureModel();
 
         View monView = view.findViewById(R.id.mondayLayout);
         View tueView = view.findViewById(R.id.tuesdayLayout);
@@ -132,7 +136,7 @@ public class TimetableFragment extends Fragment {
         for (View dayView : collumns) {
 
             LinearLayout dayLayout = (LinearLayout) dayView;
-            setSlot(dayLayout, timetableEntityList.get(i));
+            // setSlot(dayLayout, timetableEntityList.get(i));
             i++;
 
         }
