@@ -106,8 +106,8 @@ public class NewsFragment extends Fragment {
 //            @Override
 //            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 //
-//                Toast.makeText(getActivity(),"ok"+position,Toast.LENGTH_SHORT).show();
-//                NewsModel model = (NewsModel) lvNews.getItemAtPosition(position);
+//                Toast.makeText(v.getContext(),"ok"+position,Toast.LENGTH_SHORT).show();
+//                //NewsModel model = (NewsModel) lvNews.getItemAtPosition(position);
 //                Intent intent = new Intent(getActivity(), NewsInfoActivity.class);
 //                startActivity(intent);
 //            }
