@@ -28,12 +28,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.bonz.uniap_fake.R;
 import com.example.bonz.uniap_fake.dbcontext.DBContext;
 import com.example.bonz.uniap_fake.fragment.AttendanceFragment;
-<<<<<<< HEAD
 import com.example.bonz.uniap_fake.fragment.NewsFragment;
-=======
 import com.example.bonz.uniap_fake.fragment.AttendanceStudentFragment;
-import com.example.bonz.uniap_fake.fragment.HomeFragment;
->>>>>>> master
+import com.example.bonz.uniap_fake.fragment.NewsFragment;
+
 import com.example.bonz.uniap_fake.fragment.NotificationsFragment;
 import com.example.bonz.uniap_fake.fragment.SettingsFragment;
 import com.example.bonz.uniap_fake.fragment.TimetableFragment;
