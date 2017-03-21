@@ -4,6 +4,7 @@ import com.example.bonz.uniap_fake.model.AccountModel;
 import com.example.bonz.uniap_fake.model.AttendanceModel;
 import com.example.bonz.uniap_fake.model.ClassModel;
 import com.example.bonz.uniap_fake.model.LectureModel;
+import com.example.bonz.uniap_fake.model.NewsModel;
 import com.example.bonz.uniap_fake.model.SemesterModel;
 import com.example.bonz.uniap_fake.model.StudentOfClassModel;
 import com.example.bonz.uniap_fake.model.StudentModel;
@@ -65,6 +66,43 @@ public class DBContext {
 
     public void deleteAllAccount(){
         final RealmResults<AccountModel> result = realm.where(AccountModel.class).findAll();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                result.deleteAllFromRealm();
+            }
+        });
+    }
+
+    //==============================================================================================
+    //NewsModel
+    //addNews or updateNews
+    public void addNews(NewsModel model){
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(model);
+        realm.commitTransaction();
+    }
+
+    public List<NewsModel> getAllNews(){
+        return realm.where(NewsModel.class).findAll();
+    }
+
+    public NewsModel getNewsByID(int id) {
+        return realm.where(NewsModel.class).equalTo("id",id).findFirst();
+    }
+
+    public void removeSingleNews(int id){
+        final NewsModel result = realm.where(NewsModel.class).equalTo("id",id).findFirst();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                result.deleteFromRealm();
+            }
+        });
+    }
+
+    public void deleteAllNews(){
+        final RealmResults<NewsModel> result = realm.where(NewsModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

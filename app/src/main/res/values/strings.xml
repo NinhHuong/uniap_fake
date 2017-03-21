@@ -8,7 +8,7 @@
     <string name="closeDrawer">close_drawer</string>
 
     <!-- Navigation Drawer menu labels -->
-    <string name="nav_home">Home</string>
+    <string name="nav_home">News</string>
     <string name="nav_schedule">Timetable</string>
     <string name="nav_attendance">Take Attendance</string>
     <string name="nav_notifications">Notifications</string>
@@ -17,7 +17,7 @@
 
     <!-- Toolbar titles when navigation menu item is selected -->
     <string-array name="nav_item_activity_titles">
-        <item>Home</item>
+        <item>News</item>
         <item>Schedule</item>
         <item>Take Attendance</item>
         <item>Notifications</item>

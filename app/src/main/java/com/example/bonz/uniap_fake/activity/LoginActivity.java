@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.example.bonz.uniap_fake.R;
 import com.example.bonz.uniap_fake.dbcontext.DBContext;
 import com.example.bonz.uniap_fake.model.AccountModel;
+import com.example.bonz.uniap_fake.model.NewsModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,13 +46,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         init();
         //initFirebase
         initFirebase();
+        //load Account From Firebase
+        loadAccountFromFirebase();
 
-        writeNewAccount();
-        //Read from the database
-        readFirebase();
 
+        //DBContext.getInst
         dbContext = DBContext.getInst();
-        // dbContext.addAccount(AccountModel.create(1, "bbb", "1", 1));
+        //dbContext.addAccount(AccountModel.create(1, "bbb", "1", 1));
         //dbContext.addAccount(AccountModel.create(2, "aaa", "bbb", 2));
         //dbContext.addAccount(AccountModel.create(3, "aaa", "bbb", 1));
         //dbContext.addTeacher(TeacherModel.create(1,1,"aaaa","sss","sssss","3123","SE232"));
@@ -70,6 +71,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edtPassword = (EditText) findViewById(R.id.edt_password);
         //event
         btnLogin.setOnClickListener(this);
+
+
     }
 
     private void initFirebase() {
@@ -82,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     //read Database from Firebase
-    private void readFirebase() {
+    private void loadAccountFromFirebase() {
         mDatabase.child("account").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -114,18 +117,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //function onClick
     private void onClickLogin(View v) {
-        if (!edtAccount.getText().toString().equals("") && !edtPassword.getText().toString().equals("")) {
-            if(checkLogin()){
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            }else {
-                Snackbar.make(v, "Account & Password Incorrect !!!", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
-            }
-        } else {
-            Snackbar.make(v, "Enter Account & Password please !!!", Snackbar.LENGTH_SHORT)
-                    .setAction("Action", null).show();
-        }
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+//        if (!edtAccount.getText().toString().equals("") && !edtPassword.getText().toString().equals("")) {
+//            if(checkLogin()){
+//                loadDataFromFirebase();
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
+//            }else {
+//                Snackbar.make(v, "Account & Password Incorrect !!!", Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null).show();
+//            }
+//        } else {
+//            Snackbar.make(v, "Enter Account & Password please !!!", Snackbar.LENGTH_SHORT)
+//                    .setAction("Action", null).show();
+//        }
 
 
     }
@@ -139,5 +145,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }
         return false;
+    }
+
+    // Load Data After Login Success
+    private void loadDataFromFirebase(){
+        mDatabase.child("news").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    NewsModel model = ds.getValue(NewsModel.class);
+                    dbContext.addNews(model);
+                    //listAccount.add(model);
+                    //Log.d("test", "Value is: " + ds.getValue(NewsModel.class));
+                }
+                List<NewsModel> listNews = new ArrayList<NewsModel>();
+                listNews = dbContext.getAllNews();
+               // Log.d("data", "Value is: " + listNews.toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

@@ -28,7 +28,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.bonz.uniap_fake.R;
 import com.example.bonz.uniap_fake.dbcontext.DBContext;
 import com.example.bonz.uniap_fake.fragment.AttendanceFragment;
-import com.example.bonz.uniap_fake.fragment.HomeFragment;
+import com.example.bonz.uniap_fake.fragment.NewsFragment;
 import com.example.bonz.uniap_fake.fragment.NotificationsFragment;
 import com.example.bonz.uniap_fake.fragment.SettingsFragment;
 import com.example.bonz.uniap_fake.fragment.TimetableFragment;
@@ -265,8 +265,8 @@ public class MainActivity extends AppCompatActivity {
         switch (navItemIndex) {
             case 0:
                 // home
-                HomeFragment homeFragment = new HomeFragment();
-                return homeFragment;
+                NewsFragment newsFragment = new NewsFragment();
+                return newsFragment;
             case 1:
                 // photos
                 TimetableFragment timetableFragment = new TimetableFragment();
@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
                 SettingsFragment settingsFragment = new SettingsFragment();
                 return settingsFragment;
             default:
-                return new HomeFragment();
+                return new NewsFragment();
         }
     }
 
