@@ -133,33 +133,40 @@ public class MainActivity extends AppCompatActivity {
         }
 
         dbContext = DBContext.getInst();
-        //createSampleData();
-        accountModel = dbContext.getAccountByID(2);
+        createSampleData();
+        accountModel = dbContext.getAccountByID(1);
     }
 
     private void createSampleData() {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         //account
 
-        AccountModel accountModel1 = AccountModel.create(1, "huongntmse03077", "", 1);
-        AccountModel accountModel2 = AccountModel.create(2, "anhbt", "1", 2);
-        
+
+        AccountModel accountModel1 = AccountModel.create(1, "hoa", "", 1);
+        AccountModel accountModel2 = AccountModel.create(2, "la", "", 1);
+        AccountModel accountModel3 = AccountModel.create(3, "canh", "", 1);
+        AccountModel accountModel4 = AccountModel.create(4, "anhbt", "", 2);
+
         //mDatabase.child("account").child(id).setValue(accountModel1);
         dbContext.addAccount(accountModel1);
         dbContext.addAccount(accountModel2);
+        dbContext.addAccount(accountModel3);
+        dbContext.addAccount(accountModel4);
         //semester
         SemesterModel ses1 = SemesterModel.create(1, "Spring 2017", "05/01/2017", "30/04/2017");
         SemesterModel ses2 = SemesterModel.create(2, "Spring 2016", "05/01/2016", "30/04/2016");
         dbContext.addSemesterModel(ses1);
         dbContext.addSemesterModel(ses2);
         //temp teacher
-        TeacherModel teacher1 = TeacherModel.create(5, 3, "Bui", "Anh", "abc", "123", "TA123", null);
+        TeacherModel teacher1 = TeacherModel.create(5, "Bui", "Anh", "abc", "123", "TA123", null, accountModel4);
         dbContext.addTeacher(teacher1);
         //temp student
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.huongntm5);
-        StudentModel stu1 = StudentModel.create(2, 2, "Ninh", "Huong", "abc", "123", "SE03077", BitMapToString(bitmap));
-        StudentModel stu2 = StudentModel.create(3, 3, "Ninh", "Huong2", "abc", "123", "SE03078", BitMapToString(bitmap));
-        StudentModel stu3 = StudentModel.create(4, 4, "Ninh", "Huong3", "abc", "123", "SE03079", BitMapToString(bitmap));
+
+        StudentModel stu1 = StudentModel.create(1, "Nguyen", "hoa", "abc", "123", "SE03077", BitMapToString(bitmap), accountModel1);
+        StudentModel stu2 = StudentModel.create(2, "Tran", "la", "abc", "123", "SE03078", BitMapToString(bitmap), accountModel2);
+        StudentModel stu3 = StudentModel.create(3, "Dinh", "canh", "abc", "123", "SE03079", BitMapToString(bitmap), accountModel3);
+
         dbContext.addStudent(stu1);
         dbContext.addStudent(stu2);
         dbContext.addStudent(stu3);

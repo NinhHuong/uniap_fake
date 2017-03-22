@@ -1,5 +1,7 @@
 package com.example.bonz.uniap_fake.model;
 
+import com.example.bonz.uniap_fake.dbcontext.DBContext;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -28,6 +30,16 @@ public class NewsModel extends RealmObject{
     public static NewsModel create(int id, String title, String content, String date) {
         NewsModel model = new NewsModel();
         model.id = id;
+        model.title = title;
+        model.content = content;
+        model.date = date;
+        return model;
+    }
+
+    public static NewsModel createWithoutId(String title, String content, String date) {
+        NewsModel model = new NewsModel();
+        DBContext dbContext = DBContext.getInst();
+        model.id = dbContext.getMaxNewId() + 1;
         model.title = title;
         model.content = content;
         model.date = date;

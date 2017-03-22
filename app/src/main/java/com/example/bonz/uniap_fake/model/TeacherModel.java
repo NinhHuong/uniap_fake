@@ -1,5 +1,7 @@
 package com.example.bonz.uniap_fake.model;
 
+import com.example.bonz.uniap_fake.dbcontext.DBContext;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -11,18 +13,18 @@ public class TeacherModel extends RealmObject {
     @PrimaryKey
     private int id;
 
-    private int accountId;
     private String firstName;
     private String lastName;
     private String address;
     private String phoneNumber;
     private String rollNumber;
     private String photo;
+    private AccountModel accountModel;
 
-    public static TeacherModel create( int id, int accountId, String firstName, String lastName, String address,
-                                       String phoneNumber, String rollNumber, String photo) {
+    public static TeacherModel create(int id, String firstName, String lastName, String address,
+                                       String phoneNumber, String rollNumber, String photo, AccountModel accountModel) {
         TeacherModel teacherModel = new TeacherModel();
-        teacherModel.accountId = accountId;
+        teacherModel.accountModel = accountModel;
         teacherModel.address = address;
         teacherModel.firstName = firstName;
         teacherModel.id = id;
@@ -33,12 +35,27 @@ public class TeacherModel extends RealmObject {
         return teacherModel;
     }
 
-    public int getAccountId() {
-        return accountId;
+    public static TeacherModel createWithoutId(String firstName, String lastName, String address,
+                                       String phoneNumber, String rollNumber, String photo, AccountModel accountModel) {
+        TeacherModel teacherModel = new TeacherModel();
+        DBContext dbContext = DBContext.getInst();
+        teacherModel.id = dbContext.getMaxTeacherId() + 1;
+        teacherModel.accountModel = accountModel;
+        teacherModel.address = address;
+        teacherModel.firstName = firstName;
+        teacherModel.lastName = lastName;
+        teacherModel.photo = photo;
+        teacherModel.phoneNumber = phoneNumber;
+        teacherModel.rollNumber = rollNumber;
+        return teacherModel;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public AccountModel getAccountId() {
+        return accountModel;
+    }
+
+    public void setAccountId(AccountModel accountModel) {
+        this.accountModel = accountModel;
     }
 
     public String getAddress() {

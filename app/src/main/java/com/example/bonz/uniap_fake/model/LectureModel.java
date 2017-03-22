@@ -1,5 +1,7 @@
 package com.example.bonz.uniap_fake.model;
 
+import com.example.bonz.uniap_fake.dbcontext.DBContext;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -17,6 +19,17 @@ public class LectureModel extends RealmObject {
     public static LectureModel create(int id, String date, int slot, SubjectOfClassModel subjectOfClassModel) {
         LectureModel lecture = new LectureModel();
         lecture.id = id;
+        lecture.date = date;
+        lecture.slot = slot;
+        lecture.subjectOfClassModel = subjectOfClassModel;
+
+        return lecture;
+    }
+
+    public static LectureModel createWithoutId(String date, int slot, SubjectOfClassModel subjectOfClassModel) {
+        LectureModel lecture = new LectureModel();
+        DBContext dbContext = DBContext.getInst();
+        lecture.id = dbContext.getMaxLectureId() + 1;
         lecture.date = date;
         lecture.slot = slot;
         lecture.subjectOfClassModel = subjectOfClassModel;

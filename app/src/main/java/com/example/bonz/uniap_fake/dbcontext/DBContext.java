@@ -38,12 +38,19 @@ public class DBContext {
     }
 
     //==============================================================================================
-    //AccountModel
+    //region AccountModel
     //addAccount or updateAccount
     public void addAccount(AccountModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxAccountId() {
+        try{
+            return realm.where(AccountModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<AccountModel> getAllAccount(){
@@ -73,14 +80,22 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //NewsModel
+    //region NewsModel
     //addNews or updateNews
     public void addNews(NewsModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxNewId() {
+        try{
+            return realm.where(NewsModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<NewsModel> getAllNews(){
@@ -110,14 +125,21 @@ public class DBContext {
             }
         });
     }
-
+    //endregion
 
     //==============================================================================================
-    //StudentModel
+    //region StudentModel
     public void addStudent(StudentModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxStudentId() {
+        try{
+            return realm.where(StudentModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<StudentModel> getAllStudent(){
@@ -147,13 +169,21 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //TeacherModel
+    //region TeacherModel
     public void addTeacher(TeacherModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxTeacherId() {
+        try{
+            return realm.where(TeacherModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<TeacherModel> getAllTeacher(){
@@ -183,13 +213,21 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //ClassModel
+    //region ClassModel
     public void addClass(ClassModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxClassId() {
+        try{
+            return realm.where(ClassModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<ClassModel> getAllClass(){
@@ -219,13 +257,21 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //StudentOfClassModel
+    //region StudentOfClassModel
     public void addStudentOfClass(StudentOfClassModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxStudentOfClassId() {
+        try{
+            return realm.where(StudentOfClassModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<StudentOfClassModel> getAllStudentOfClass(){
@@ -255,13 +301,21 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //AttendanceModel
+    //region AttendanceModel
     public void addAttendance(AttendanceModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxAttendanceId() {
+        try{
+            return realm.where(AttendanceModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<AttendanceModel> getAllAttendance(){
@@ -299,13 +353,21 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //SemesterModel
+    //region SemesterModel
     public void addSemesterModel(SemesterModel model) {
         realm.beginTransaction();;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxSemesterId() {
+        try{
+            return realm.where(SemesterModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<SemesterModel> getAllSemesterModel() {
@@ -335,13 +397,21 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //LectureModel
+    //region LectureModel
     public void addLectureModel(LectureModel model) {
         realm.beginTransaction();;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxLectureId() {
+        try{
+            return realm.where(LectureModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<LectureModel> getAllLectureModel() {
@@ -375,13 +445,21 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //SubjectOfClassModel
+    //region SubjectOfClassModel
     public void addSubjectOfClassModel(SubjectOfClassModel model) {
         realm.beginTransaction();;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxSubjectOfClassId() {
+        try{
+            return realm.where(StudentOfClassModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<SubjectOfClassModel> getAllSubjectOfClassModel() {
@@ -411,13 +489,21 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //SubjectModel
+    //region SubjectModel
     public void addSubjectModel(SubjectModel model) {
         realm.beginTransaction();;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxSubjectId() {
+        try{
+            return realm.where(SubjectModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<SubjectModel> getAllSubjectModel() {
@@ -447,6 +533,6 @@ public class DBContext {
             }
         });
     }
-
+    //endregion
 
 }

@@ -1,5 +1,7 @@
 package com.example.bonz.uniap_fake.model;
 
+import com.example.bonz.uniap_fake.dbcontext.DBContext;
+
 import java.util.List;
 
 import io.realm.RealmObject;
@@ -24,6 +26,14 @@ public class StudentOfClassModel extends RealmObject {
         return studentOfClassModel;
     }
 
+    public static StudentOfClassModel createWithoutId(ClassModel classModel, StudentModel studentModel) {
+        StudentOfClassModel studentOfClassModel = new StudentOfClassModel();
+        DBContext dbContext = DBContext.getInst();
+        studentOfClassModel.id = dbContext.getMaxStudentOfClassId() + 1;
+        studentOfClassModel.classModel = classModel;
+        studentOfClassModel.studentModel = studentModel;
+        return studentOfClassModel;
+    }
 
     public int getId() {
         return id;
