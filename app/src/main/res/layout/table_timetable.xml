@@ -30,16 +30,18 @@
         <RelativeLayout
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/colorAccent">
 
             <TextView
+                android:id="@+id/monthTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:text="12"
-                android:textSize="18sp"
+                android:textColor="#f4f4f4"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <View
@@ -49,13 +51,14 @@
                 android:layout_alignParentBottom="true" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/yearTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/view"
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
                 android:text="2012"
+                android:textColor="#f4f4f4"
                 android:textSize="13sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -452,5 +455,29 @@
             layout="@layout/backup2" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/nextWeekButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/button_next" />
+
+    <Button
+        android:id="@+id/lastWeekButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/button_back" />
+
+    <Button
+        android:id="@+id/currentWeekButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/button_current" />
 
 </RelativeLayout>

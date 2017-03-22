@@ -1,7 +1,7 @@
 package com.example.bonz.uniap_fake.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +16,6 @@ import com.example.bonz.uniap_fake.other.Constanst;
 import com.example.bonz.uniap_fake.other.ListViewApdapter;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +34,7 @@ public class TakeAttendanceActivity extends AppCompatActivity {
     private Button btnEdit, btnSave;
     private ListViewApdapter apdapter;
     private ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +54,13 @@ public class TakeAttendanceActivity extends AppCompatActivity {
         btnEdit.setEnabled(isInTime);
         boolean isEdited = false;
         attendanceModelList = dbContext.getAttendanceByLectureId(lectureId);
-        for(AttendanceModel attendanceModel : attendanceModelList) {
-            if(attendanceModel.getIsAttendance() == true) {
+        for (AttendanceModel attendanceModel : attendanceModelList) {
+            if (attendanceModel.getIsAttendance() == true) {
                 isEdited = true;
                 break;
             }
         }
-        if(isEdited) {
+        if (isEdited) {
             btnEdit.setVisibility(View.VISIBLE);
             btnSave.setEnabled(false);
             apdapter = new ListViewApdapter(this, attendanceModelList, false);
@@ -70,7 +70,7 @@ public class TakeAttendanceActivity extends AppCompatActivity {
         listView.setAdapter(apdapter);
 
         //list
-        btnEdit.setOnClickListener(new View.OnClickListener(){
+        btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btnSave.setEnabled(true);
@@ -80,7 +80,7 @@ public class TakeAttendanceActivity extends AppCompatActivity {
             }
         });
 
-        btnSave.setOnClickListener(new View.OnClickListener(){
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btnEdit.setEnabled(true);
@@ -102,16 +102,12 @@ public class TakeAttendanceActivity extends AppCompatActivity {
 
     private boolean isInTime() {
         //only take attendance when this time in slot
-        Date date = new Date();
-        try {
-            date = KEY_DATE_FORMAT.parse(lectureModel.getDate());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date date = lectureModel.getDate();
+
 
         long current = (new Date()).getTime();
         long time;
-        switch (lectureModel.getSlot()){
+        switch (lectureModel.getSlot()) {
             case 1:
                 date.setTime(Constanst.KEY_SLOT_1);
                 time = date.getTime();
@@ -136,7 +132,7 @@ public class TakeAttendanceActivity extends AppCompatActivity {
                 date.setTime(Constanst.KEY_SLOT_6);
                 time = date.getTime();
                 return current >= time && current <= time + Constanst.KEY_TIME_ALLOWANCE + Constanst.KEY_SLOT_DURATION;
-            }
+        }
         return false;
     }
 

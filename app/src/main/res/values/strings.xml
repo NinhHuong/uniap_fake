@@ -34,6 +34,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- timetable strings -->
     <string name="mon">Mon</string>
     <string name="tue">Tue</string>
     <string name="wed">Wed</string>
@@ -41,16 +42,16 @@
     <string name="fri">Fri</string>
     <string name="sat">Sat</string>
     <string name="sun">Sun</string>
-
     <string name="slot1">Slot 1</string>
     <string name="slot2">Slot 2</string>
     <string name="slot3">Slot 3</string>
     <string name="slot4">Slot 4</string>
     <string name="slot5">Slot 5</string>
     <string name="slot6">Slot 6</string>
-
     <string name="default_subject"></string>
-
+    <string name="button_next">Next week &gt;</string>
+    <string name="button_back">&lt; Last week</string>
+    <string name="button_current">Current week</string>
     <!--take attendance function-->
     <string name="txt_list_class_of_today">List class of today </string>
     <string name="txt_list_class_of_date">List class of day </string>

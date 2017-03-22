@@ -12,6 +12,7 @@ import com.example.bonz.uniap_fake.model.SubjectModel;
 import com.example.bonz.uniap_fake.model.SubjectOfClassModel;
 import com.example.bonz.uniap_fake.model.TeacherModel;
 
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -39,22 +40,22 @@ public class DBContext {
     //==============================================================================================
     //AccountModel
     //addAccount or updateAccount
-    public void addAccount(AccountModel model){
+    public void addAccount(AccountModel model) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<AccountModel> getAllAccount(){
+    public List<AccountModel> getAllAccount() {
         return realm.where(AccountModel.class).findAll();
     }
 
     public AccountModel getAccountByID(int id) {
-        return realm.where(AccountModel.class).equalTo("id",id).findFirst();
+        return realm.where(AccountModel.class).equalTo("id", id).findFirst();
     }
 
-    public void removeSingleAccount(int id){
-        final AccountModel result = realm.where(AccountModel.class).equalTo("id",id).findFirst();
+    public void removeSingleAccount(int id) {
+        final AccountModel result = realm.where(AccountModel.class).equalTo("id", id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -63,7 +64,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllAccount(){
+    public void deleteAllAccount() {
         final RealmResults<AccountModel> result = realm.where(AccountModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -76,22 +77,22 @@ public class DBContext {
     //==============================================================================================
     //NewsModel
     //addNews or updateNews
-    public void addNews(NewsModel model){
+    public void addNews(NewsModel model) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<NewsModel> getAllNews(){
+    public List<NewsModel> getAllNews() {
         return realm.where(NewsModel.class).findAll();
     }
 
     public NewsModel getNewsByID(int id) {
-        return realm.where(NewsModel.class).equalTo("id",id).findFirst();
+        return realm.where(NewsModel.class).equalTo("id", id).findFirst();
     }
 
-    public void removeSingleNews(int id){
-        final NewsModel result = realm.where(NewsModel.class).equalTo("id",id).findFirst();
+    public void removeSingleNews(int id) {
+        final NewsModel result = realm.where(NewsModel.class).equalTo("id", id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -100,7 +101,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllNews(){
+    public void deleteAllNews() {
         final RealmResults<NewsModel> result = realm.where(NewsModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -113,22 +114,22 @@ public class DBContext {
 
     //==============================================================================================
     //StudentModel
-    public void addStudent(StudentModel model){
+    public void addStudent(StudentModel model) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<StudentModel> getAllStudent(){
+    public List<StudentModel> getAllStudent() {
         return realm.where(StudentModel.class).findAll();
     }
 
     public StudentModel getStudentByID(int id) {
-        return realm.where(StudentModel.class).equalTo("id",id).findFirst();
+        return realm.where(StudentModel.class).equalTo("id", id).findFirst();
     }
 
-    public void removeSingleStudent(int id){
-        final StudentModel result = realm.where(StudentModel.class).equalTo("id",id).findFirst();
+    public void removeSingleStudent(int id) {
+        final StudentModel result = realm.where(StudentModel.class).equalTo("id", id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -137,7 +138,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllStudent(){
+    public void deleteAllStudent() {
         final RealmResults<StudentModel> result = realm.where(StudentModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -149,22 +150,22 @@ public class DBContext {
 
     //==============================================================================================
     //TeacherModel
-    public void addTeacher(TeacherModel model){
+    public void addTeacher(TeacherModel model) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<TeacherModel> getAllTeacher(){
+    public List<TeacherModel> getAllTeacher() {
         return realm.where(TeacherModel.class).findAll();
     }
 
     public TeacherModel getTeacherByID(int id) {
-        return realm.where(TeacherModel.class).equalTo("id",id).findFirst();
+        return realm.where(TeacherModel.class).equalTo("id", id).findFirst();
     }
 
-    public void removeSingleTeacher(int id){
-        final TeacherModel result = realm.where(TeacherModel.class).equalTo("id",id).findFirst();
+    public void removeSingleTeacher(int id) {
+        final TeacherModel result = realm.where(TeacherModel.class).equalTo("id", id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -173,7 +174,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllTeacher(){
+    public void deleteAllTeacher() {
         final RealmResults<TeacherModel> result = realm.where(TeacherModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -185,22 +186,22 @@ public class DBContext {
 
     //==============================================================================================
     //ClassModel
-    public void addClass(ClassModel model){
+    public void addClass(ClassModel model) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<ClassModel> getAllClass(){
+    public List<ClassModel> getAllClass() {
         return realm.where(ClassModel.class).findAll();
     }
 
     public ClassModel getClassByID(int id) {
-        return realm.where(ClassModel.class).equalTo("id",id).findFirst();
+        return realm.where(ClassModel.class).equalTo("id", id).findFirst();
     }
 
-    public void removeSingleClass(int id){
-        final ClassModel result = realm.where(ClassModel.class).equalTo("id",id).findFirst();
+    public void removeSingleClass(int id) {
+        final ClassModel result = realm.where(ClassModel.class).equalTo("id", id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -209,7 +210,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllClass(){
+    public void deleteAllClass() {
         final RealmResults<ClassModel> result = realm.where(ClassModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -221,22 +222,22 @@ public class DBContext {
 
     //==============================================================================================
     //StudentOfClassModel
-    public void addStudentOfClass(StudentOfClassModel model){
+    public void addStudentOfClass(StudentOfClassModel model) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<StudentOfClassModel> getAllStudentOfClass(){
+    public List<StudentOfClassModel> getAllStudentOfClass() {
         return realm.where(StudentOfClassModel.class).findAll();
     }
 
     public StudentOfClassModel getStudentOfClassByID(int id) {
-        return realm.where(StudentOfClassModel.class).equalTo("id",id).findFirst();
+        return realm.where(StudentOfClassModel.class).equalTo("id", id).findFirst();
     }
 
-    public void removeSingleStudentOfClassModel(int id){
-        final StudentOfClassModel result = realm.where(StudentOfClassModel.class).equalTo("id",id).findFirst();
+    public void removeSingleStudentOfClassModel(int id) {
+        final StudentOfClassModel result = realm.where(StudentOfClassModel.class).equalTo("id", id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -245,7 +246,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllStudentOfClass(){
+    public void deleteAllStudentOfClass() {
         final RealmResults<StudentOfClassModel> result = realm.where(StudentOfClassModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -257,30 +258,30 @@ public class DBContext {
 
     //==============================================================================================
     //AttendanceModel
-    public void addAttendance(AttendanceModel model){
+    public void addAttendance(AttendanceModel model) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<AttendanceModel> getAllAttendance(){
+    public List<AttendanceModel> getAllAttendance() {
         return realm.where(AttendanceModel.class).findAll();
     }
 
     public AttendanceModel getAttendanceByID(int id) {
-        return realm.where(AttendanceModel.class).equalTo("id",id).findFirst();
+        return realm.where(AttendanceModel.class).equalTo("id", id).findFirst();
     }
 
     public List<AttendanceModel> getAttendanceBySemesterId(int id) {
-        return realm.where(AttendanceModel.class).equalTo("lectureModel.subjectOfClassModel.classModel.semesterModel.id",id).findAll();
+        return realm.where(AttendanceModel.class).equalTo("lectureModel.subjectOfClassModel.classModel.semesterModel.id", id).findAll();
     }
 
     public List<AttendanceModel> getAttendanceByLectureId(int id) {
-        return realm.where(AttendanceModel.class).equalTo("lectureModel.id",id).findAll();
+        return realm.where(AttendanceModel.class).equalTo("lectureModel.id", id).findAll();
     }
 
-    public void removeSingleAttendance(int id){
-        final AttendanceModel result = realm.where(AttendanceModel.class).equalTo("id",id).findFirst();
+    public void removeSingleAttendance(int id) {
+        final AttendanceModel result = realm.where(AttendanceModel.class).equalTo("id", id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -289,7 +290,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllAttendance(){
+    public void deleteAllAttendance() {
         final RealmResults<AttendanceModel> result = realm.where(AttendanceModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -302,7 +303,8 @@ public class DBContext {
     //==============================================================================================
     //SemesterModel
     public void addSemesterModel(SemesterModel model) {
-        realm.beginTransaction();;
+        realm.beginTransaction();
+        ;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
@@ -338,13 +340,18 @@ public class DBContext {
     //==============================================================================================
     //LectureModel
     public void addLectureModel(LectureModel model) {
-        realm.beginTransaction();;
+        realm.beginTransaction();
+        ;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
     public List<LectureModel> getAllLectureModel() {
         return realm.where(LectureModel.class).findAll();
+    }
+
+    public List<LectureModel> getAllLectureByDate(Date from, Date to) {
+        return realm.where(LectureModel.class).between("date", from, to).findAll();
     }
 
     public LectureModel getLectureModelById(int id) {
@@ -378,7 +385,8 @@ public class DBContext {
     //==============================================================================================
     //SubjectOfClassModel
     public void addSubjectOfClassModel(SubjectOfClassModel model) {
-        realm.beginTransaction();;
+        realm.beginTransaction();
+        ;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
@@ -414,7 +422,8 @@ public class DBContext {
     //==============================================================================================
     //SubjectModel
     public void addSubjectModel(SubjectModel model) {
-        realm.beginTransaction();;
+        realm.beginTransaction();
+        ;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
