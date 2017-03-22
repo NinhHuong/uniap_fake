@@ -150,6 +150,80 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addAccount(accountModel2);
         dbContext.addAccount(accountModel3);
         dbContext.addAccount(accountModel4);
+
+        //semester
+        SemesterModel ses1 = SemesterModel.create(1, "Spring 2017", "05/01/2017", "30/04/2017");
+        SemesterModel ses2 = SemesterModel.create(2, "Spring 2016", "05/01/2016", "30/04/2016");
+        dbContext.addSemesterModel(ses1);
+        dbContext.addSemesterModel(ses2);
+
+        //temp teacher
+        TeacherModel teacher1 = TeacherModel.create(5, "Bui", "Anh", "abc", "123", "TA123", null, accountModel4);
+        dbContext.addTeacher(teacher1);
+
+        //temp student
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.huongntm5);
+
+        StudentModel stu1 = StudentModel.create(1, "Nguyen", "hoa", "abc", "123", "SE03077", BitMapToString(bitmap), accountModel1);
+        StudentModel stu2 = StudentModel.create(2, "Tran", "la", "abc", "123", "SE03078", BitMapToString(bitmap), accountModel2);
+        StudentModel stu3 = StudentModel.create(3, "Dinh", "canh", "abc", "123", "SE03079", BitMapToString(bitmap), accountModel3);
+
+        dbContext.addStudent(stu1);
+        dbContext.addStudent(stu2);
+        dbContext.addStudent(stu3);
+
+
+        //temp class
+        ClassModel class1 = ClassModel.create(5, "ES20102", ses1);
+        dbContext.addClass(class1);
+
+        //student of class
+        dbContext.addStudentOfClass(StudentOfClassModel.create(1, class1, stu1));
+        dbContext.addStudentOfClass(StudentOfClassModel.create(2, class1, stu2));
+        dbContext.addStudentOfClass(StudentOfClassModel.create(3, class1, stu3));
+
+        //subject
+        SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile");
+        dbContext.addSubjectModel(sub);
+
+        SubjectOfClassModel subOfClass1 = SubjectOfClassModel.create(1, sub, class1, teacher1);
+        dbContext.addSubjectOfClassModel(subOfClass1);
+
+        //temp lecture
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        LectureModel lec1 = LectureModel.create(1, df.format(new Date()), 1, subOfClass1);
+        LectureModel lec2 = LectureModel.create(2, df.format(new Date()), 2, subOfClass1);
+        LectureModel lec3 = LectureModel.create(3, df.format(c.getTime()), 4, subOfClass1);
+        LectureModel lec4 = LectureModel.create(4, df.format(c.getTime()), 6, subOfClass1);
+        dbContext.addLectureModel(lec1);
+        dbContext.addLectureModel(lec2);
+        dbContext.addLectureModel(lec3);
+        dbContext.addLectureModel(lec4);
+
+        //attendance
+        dbContext.addAttendance(AttendanceModel.create(1, false, stu1, lec1));
+        dbContext.addAttendance(AttendanceModel.create(2, false, stu2, lec1));
+        dbContext.addAttendance(AttendanceModel.create(3, false, stu3, lec1));
+        dbContext.addAttendance(AttendanceModel.create(4, false, stu1, lec2));
+        dbContext.addAttendance(AttendanceModel.create(5, false, stu2, lec2));
+        dbContext.addAttendance(AttendanceModel.create(6, false, stu3, lec3));
+        dbContext.addAttendance(AttendanceModel.create(7, false, stu1, lec4));
+
+    }
+    private void createSampleDataCopy() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        //account
+
+
+        AccountModel accountModel1 = AccountModel.create(1, "hoa", "1", 1);
+        AccountModel accountModel2 = AccountModel.create(2, "la", "1", 1);
+        AccountModel accountModel3 = AccountModel.create(3, "canh", "1", 1);
+        AccountModel accountModel4 = AccountModel.create(4, "anhbt", "1", 2);
+        dbContext.addAccount(accountModel1);
+        dbContext.addAccount(accountModel2);
+        dbContext.addAccount(accountModel3);
+        dbContext.addAccount(accountModel4);
         mDatabase.child("account").child("1").setValue(accountModel1);
         mDatabase.child("account").child("2").setValue(accountModel2);
         mDatabase.child("account").child("3").setValue(accountModel3);
@@ -197,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
         //subject of class
         SubjectOfClassModel subOfClass1 = SubjectOfClassModel.create(1, sub, class1, teacher1);
         dbContext.addSubjectOfClassModel(subOfClass1);
-        mDatabase.child("subject").child("1").setValue(sub);
+        mDatabase.child("subjectOfClass").child("1").setValue(subOfClass1);
         //temp lecture
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, 1);
@@ -229,6 +303,7 @@ public class MainActivity extends AppCompatActivity {
         mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(6, false, stu3, lec3));
         mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(7, false, stu1, lec4));
     }
+
 
     private String BitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
