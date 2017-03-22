@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     AccountModel model = ds.getValue(AccountModel.class);
                     listAccount.add(model);
-                    //Log.d("test", "Value is: " + ds.getValue(AccountModel.class));
+                    Log.d("test", "Value is: " + ds.getValue(AccountModel.class));
                 }
             }
 
@@ -191,7 +191,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Log.d("testTeacher", "Value is: " + ds.toString());
+                        //Log.d("testTeacher", "Value is: " + ds.toString());
                         TeacherModel model = ds.getValue(TeacherModel.class);
                         int getAccountId = 0;
                         try {

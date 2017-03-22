@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
+    StudentModel infoAccountStudent;
+    TeacherModel infoAccountTeacher;
+
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("root");
 
 
@@ -95,6 +98,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        dbContext = DBContext.getInst();
+        //createSampleData();
+        accountModel = dbContext.getAllAccount().get(0);
+        if(accountModel.getRoll()==1){
+            infoAccountStudent = dbContext.getAllStudent().get(0);
+        }else  if(accountModel.getRoll()==2){
+            infoAccountTeacher = dbContext.getAllTeacher().get(0);
+        }
+
 
         mHandler = new Handler();
 
@@ -132,9 +145,7 @@ public class MainActivity extends AppCompatActivity {
             loadHomeFragment();
         }
 
-        dbContext = DBContext.getInst();
-        //createSampleData();
-        accountModel = dbContext.getAllAccount().get(0);
+
     }
 
     private void createSampleData() {
@@ -313,6 +324,18 @@ public class MainActivity extends AppCompatActivity {
         return temp;
     }
 
+    private Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+                    encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
     /***
      * Load navigation menu header information
      * like background image, profile image
@@ -320,8 +343,16 @@ public class MainActivity extends AppCompatActivity {
      */
     private void loadNavHeader() {
         // name, website
-        txtName.setText("Ravi Tamada");
-        txtWebsite.setText("www.androidhive.info");
+        if(accountModel.getRoll()==1){
+            txtName.setText(infoAccountStudent.getFirstName()+" "+infoAccountStudent.getLastName());
+            txtWebsite.setText(infoAccountStudent.getRollNumber());
+            imgProfile.setImageBitmap(StringToBitMap(infoAccountStudent.getPhoto()));
+        }else  if(accountModel.getRoll()==2){
+            txtName.setText(infoAccountTeacher.getFirstName()+" "+infoAccountTeacher.getLastName());
+            txtWebsite.setText(infoAccountTeacher.getRollNumber());
+            imgProfile.setImageBitmap(StringToBitMap(infoAccountTeacher.getPhoto()));
+        }
+
 
         // loading header background image
         Glide.with(this).load(urlNavHeaderBg)
@@ -330,12 +361,12 @@ public class MainActivity extends AppCompatActivity {
                 .into(imgNavHeaderBg);
 
         // Loading profile image
-        Glide.with(this).load(urlProfileImg)
-                .crossFade()
-                .thumbnail(0.5f)
-                .bitmapTransform(new CircleTransform(this))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgProfile);
+//        Glide.with(this).load(urlProfileImg)
+//                .crossFade()
+//                .thumbnail(0.5f)
+//                .bitmapTransform(new CircleTransform(this))
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(imgProfile);
 
         // showing dot next to notifications label
         navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
