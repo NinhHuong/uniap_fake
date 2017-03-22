@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     // urls to load navigation header background image
     // and profile image
     private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
-    private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
+    private static final String urlProfileImg = "https://scontent.fhan2-1.fna.fbcdn.net/v/t31.0-8/16707217_1851396828461286_3736687948271040305_o.jpg?oh=b44547381106120c4a22b32932ffc60a&oe=59680F52";
     // tags used to attach the fragments
     private static final String TAG_HOME = "home";
     private static final String TAG_PHOTOS = "photos";
