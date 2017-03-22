@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+import com.example.bonz.uniap_fake.dbcontext.DBContext;
+
 import java.io.ByteArrayOutputStream;
 
 import io.realm.RealmObject;
@@ -17,18 +19,18 @@ public class StudentModel extends RealmObject {
     @PrimaryKey
     private int id;
 
-    private int accountId;
     private String firstName;
     private String lastName;
     private String address;
     private String phoneNumber;
     private String rollNumber;
     private String photo;
+    private AccountModel accountModel;
 
-    public static StudentModel create(int id, int accountId, String firstName, String lastName, String address,
-                                      String phoneNumber, String rollNumber, String photo) {
+    public static StudentModel create(int id, String firstName, String lastName, String address,
+                                      String phoneNumber, String rollNumber, String photo, AccountModel accountModel) {
         StudentModel studentModel = new StudentModel();
-        studentModel.accountId = accountId;
+        studentModel.accountModel = accountModel;
         studentModel.address = address;
         studentModel.firstName = firstName;
         studentModel.id = id;
@@ -39,12 +41,27 @@ public class StudentModel extends RealmObject {
         return studentModel;
     }
 
-    public int getAccountId() {
-        return accountId;
+    public static StudentModel createWithoutId(String firstName, String lastName, String address,
+                                      String phoneNumber, String rollNumber, String photo, AccountModel accountModel) {
+        StudentModel studentModel = new StudentModel();
+        DBContext dbContext = DBContext.getInst();
+        studentModel.accountModel = accountModel;
+        studentModel.address = address;
+        studentModel.firstName = firstName;
+        studentModel.id = dbContext.getMaxStudentId() + 1;
+        studentModel.lastName = lastName;
+        studentModel.phoneNumber = phoneNumber;
+        studentModel.rollNumber = rollNumber;
+        studentModel.photo = photo;
+        return studentModel;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public AccountModel getAccountId() {
+        return accountModel;
+    }
+
+    public void setAccountId(AccountModel accountId) {
+        this.accountModel = accountId;
     }
 
     public String getAddress() {

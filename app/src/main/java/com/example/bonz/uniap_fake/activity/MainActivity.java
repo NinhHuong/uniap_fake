@@ -138,60 +138,64 @@ public class MainActivity extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         //account
 
-        AccountModel accountModel1 = AccountModel.create(1, "huongntmse03077", "", 1);
-        AccountModel accountModel2 = AccountModel.create(2, "anhbt", "", 2);
+        AccountModel accountModel1 = AccountModel.createWithoutId("huongntmse03077", "", 1);
+        AccountModel accountModel2 = AccountModel.createWithoutId("huongntmse03078", "", 1);
+        AccountModel accountModel3 = AccountModel.createWithoutId("huongntmse03079", "", 1);
+        AccountModel accountModel4 = AccountModel.createWithoutId("anhbt", "", 2);
 
         //mDatabase.child("account").child(id).setValue(accountModel1);
         dbContext.addAccount(accountModel1);
         dbContext.addAccount(accountModel2);
+        dbContext.addAccount(accountModel3);
+        dbContext.addAccount(accountModel4);
         //semester
-        SemesterModel ses1 = SemesterModel.create(1, "Spring 2017", "05/01/2017", "30/04/2017");
-        SemesterModel ses2 = SemesterModel.create(2, "Spring 2016", "05/01/2016", "30/04/2016");
+        SemesterModel ses1 = SemesterModel.createWithoutId("Spring 2017", "05/01/2017", "30/04/2017");
+        SemesterModel ses2 = SemesterModel.createWithoutId("Spring 2016", "05/01/2016", "30/04/2016");
         dbContext.addSemesterModel(ses1);
         dbContext.addSemesterModel(ses2);
         //temp teacher
-        TeacherModel teacher1 = TeacherModel.create(5, 3, "Bui", "Anh", "abc", "123", "TA123", null);
+        TeacherModel teacher1 = TeacherModel.createWithoutId("Bui", "Anh", "abc", "123", "TA123", null, accountModel4);
         dbContext.addTeacher(teacher1);
         //temp student
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.huongntm5);
-        StudentModel stu1 = StudentModel.create(1, 1, "Ninh", "Huong", "abc", "123", "SE03077", BitMapToString(bitmap));
-        StudentModel stu2 = StudentModel.create(2, 2, "Ninh", "Huong2", "abc", "123", "SE03078", BitMapToString(bitmap));
-        StudentModel stu3 = StudentModel.create(3, 3, "Ninh", "Huong3", "abc", "123", "SE03079", BitMapToString(bitmap));
+        StudentModel stu1 = StudentModel.createWithoutId("Ninh", "Huong", "abc", "123", "SE03077", BitMapToString(bitmap), accountModel1);
+        StudentModel stu2 = StudentModel.createWithoutId("Ninh", "Huong2", "abc", "123", "SE03078", BitMapToString(bitmap),accountModel2);
+        StudentModel stu3 = StudentModel.createWithoutId("Ninh", "Huong3", "abc", "123", "SE03079", BitMapToString(bitmap), accountModel3);
         dbContext.addStudent(stu1);
         dbContext.addStudent(stu2);
         dbContext.addStudent(stu3);
         //temp class
-        ClassModel class1 = ClassModel.create(5, "ES20102", ses1);
+        ClassModel class1 = ClassModel.createWithoutId("ES20102", ses1);
         dbContext.addClass(class1);
         //student of class
-        dbContext.addStudentOfClass(StudentOfClassModel.create(1, class1, stu1));
-        dbContext.addStudentOfClass(StudentOfClassModel.create(2, class1, stu2));
-        dbContext.addStudentOfClass(StudentOfClassModel.create(3, class1, stu3));
+        dbContext.addStudentOfClass(StudentOfClassModel.createWithoutId(class1, stu1));
+        dbContext.addStudentOfClass(StudentOfClassModel.createWithoutId(class1, stu2));
+        dbContext.addStudentOfClass(StudentOfClassModel.createWithoutId(class1, stu3));
         //subject
-        SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile");
+        SubjectModel sub = SubjectModel.createWithoutId("PRM", "Mobile");
         dbContext.addSubjectModel(sub);
         //subject of class
-        SubjectOfClassModel subOfClass1 = SubjectOfClassModel.create(1, sub, class1, teacher1);
+        SubjectOfClassModel subOfClass1 = SubjectOfClassModel.createWithoutId(sub, class1, teacher1);
         dbContext.addSubjectOfClassModel(subOfClass1);
         //temp lecture
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, 1);
-        LectureModel lec1 = LectureModel.create(1, df.format(new Date()), 1, subOfClass1);
-        LectureModel lec2 = LectureModel.create(2, df.format(new Date()), 2, subOfClass1);
-        LectureModel lec3 = LectureModel.create(3, df.format(c.getTime()), 4, subOfClass1);
-        LectureModel lec4 = LectureModel.create(4, df.format(c.getTime()), 6, subOfClass1);
+        LectureModel lec1 = LectureModel.createWithoutId(df.format(new Date()), 1, subOfClass1);
+        LectureModel lec2 = LectureModel.createWithoutId(df.format(new Date()), 2, subOfClass1);
+        LectureModel lec3 = LectureModel.createWithoutId(df.format(c.getTime()), 4, subOfClass1);
+        LectureModel lec4 = LectureModel.createWithoutId(df.format(c.getTime()), 6, subOfClass1);
         dbContext.addLectureModel(lec1);
         dbContext.addLectureModel(lec2);
         dbContext.addLectureModel(lec3);
         dbContext.addLectureModel(lec4);
         //attendance
-        dbContext.addAttendance(AttendanceModel.create(1, false, stu1, lec1));
-        dbContext.addAttendance(AttendanceModel.create(2, false, stu2, lec1));
-        dbContext.addAttendance(AttendanceModel.create(3, false, stu3, lec1));
-        dbContext.addAttendance(AttendanceModel.create(4, false, stu1, lec2));
-        dbContext.addAttendance(AttendanceModel.create(5, false, stu2, lec2));
-        dbContext.addAttendance(AttendanceModel.create(6, false, stu3, lec3));
-        dbContext.addAttendance(AttendanceModel.create(7, false, stu1, lec4));
+        dbContext.addAttendance(AttendanceModel.createWithoutId(false, stu1, lec1));
+        dbContext.addAttendance(AttendanceModel.createWithoutId(false, stu2, lec1));
+        dbContext.addAttendance(AttendanceModel.createWithoutId(false, stu3, lec1));
+        dbContext.addAttendance(AttendanceModel.createWithoutId(false, stu1, lec2));
+        dbContext.addAttendance(AttendanceModel.createWithoutId(false, stu2, lec2));
+        dbContext.addAttendance(AttendanceModel.createWithoutId(false, stu3, lec3));
+        dbContext.addAttendance(AttendanceModel.createWithoutId(false, stu1, lec4));
     }
 
     private String BitMapToString(Bitmap bitmap) {

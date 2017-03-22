@@ -1,5 +1,8 @@
 package com.example.bonz.uniap_fake.model;
 
+import com.example.bonz.uniap_fake.dbcontext.DBContext;
+
+import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -24,6 +27,15 @@ public class AccountModel extends RealmObject {
         return  accountModel;
     }
 
+    public static AccountModel createWithoutId(String username, String password, int roll) {
+        AccountModel accountModel = new AccountModel();
+        DBContext dbContext = DBContext.getInst();
+        accountModel.id = dbContext.getMaxAccountId() + 1;
+        accountModel.username = username;
+        accountModel.password = password;
+        accountModel.roll = roll;
+        return  accountModel;
+    }
 
     public int getId() {
         return id;

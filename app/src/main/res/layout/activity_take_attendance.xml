@@ -11,26 +11,56 @@
     android:orientation="vertical"
     tools:context="com.example.bonz.uniap_fake.activity.TakeAttendanceActivity">
 
-    <TextView
-        android:id="@+id/tvClass"
-        android:textColor="#000000"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_class" />
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvClass"
+                android:textColor="#000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_class" />
 
-    <TextView
-        android:id="@+id/tvSlot"
-        android:textColor="#000000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_slot" />
+            <TextView
+                android:id="@+id/tvSlot"
+                android:textColor="#000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_slot" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_gravity="right"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:text="@string/btn_edit"
+                android:id="@+id/btn_edit"/>
+        </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:text="@string/btn_edit"
-        android:id="@+id/btn_edit"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/btn_save"
+                android:text="@string/btn_save"/>
+        </LinearLayout>
+    </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
@@ -38,13 +68,6 @@
         android:id="@+id/list_student"
         android:divider="#E0E0E0"
         android:dividerHeight="1dp">
-
     </ListView>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/btn_save"
-        android:text="@string/btn_save"/>
 
 </LinearLayout>
