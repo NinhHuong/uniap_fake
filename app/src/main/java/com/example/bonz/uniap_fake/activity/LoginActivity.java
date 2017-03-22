@@ -67,7 +67,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         dbContext.deleteAllSemesterModel();
 
 
-
         //dbContext.addAccount(AccountModel.create(1, "bbb", "1", 1));
         //dbContext.addAccount(AccountModel.create(2, "aaa", "bbb", 2));
         //dbContext.addAccount(AccountModel.create(3, "aaa", "bbb", 1));
@@ -167,6 +166,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     // Load Data After Login Success
     private void loadDataFromFirebase(final int accountId, int rollAccount) {
+        final int accId =accountId;
         mDatabase.child("news").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -186,18 +186,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         });
-        if (rollAccount == 1) {
+        if (rollAccount == 2) {
             mDatabase.child("teacher").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Log.d("testTeacher", "Value is: " + ds.toString());
                         TeacherModel model = ds.getValue(TeacherModel.class);
-                        if(accountId==model.getAccountId()){
+                        int getAccountId = 0;
+                        try {
+                            getAccountId = Integer.parseInt(model.getAccountId().toString());
+                        }catch (Exception e){
+
+                        }
+                        if (accId == getAccountId) {
                             dbContext.deleteAllTeacher();
                             dbContext.addTeacher(model);
                         }
                     }
-                    //Log.d("testTeacher", "Value is: " + dbContext.getAllTeacher().toString());
+
                 }
 
                 @Override
@@ -205,13 +212,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 }
             });
-        } else if (rollAccount == 2) {
+        } else if (rollAccount == 1) {
             mDatabase.child("student").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         StudentModel model = ds.getValue(StudentModel.class);
-                        if(accountId==model.getAccountId()){
+                        int getAccountId = 0;
+                        try {
+                            getAccountId = Integer.parseInt(model.getAccountId().toString());
+                        }catch (Exception e){
+
+                        }
+                        if (accId == getAccountId) {
                             dbContext.deleteAllStudent();
                             dbContext.addStudent(model);
                         }
@@ -232,8 +245,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     AttendanceModel model = ds.getValue(AttendanceModel.class);
-                        dbContext.deleteAllAttendance();
-                        dbContext.addAttendance(model);
+                    dbContext.deleteAllAttendance();
+                    dbContext.addAttendance(model);
 
                 }
                 //Log.d("testdata", "Value is: " + dbContext.getAllAttendance().toString());
@@ -359,9 +372,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         });
-
-
-
 
 
     }
