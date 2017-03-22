@@ -137,8 +137,11 @@ public class MainActivity extends AppCompatActivity {
     private void createSampleData() {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         //account
+
         AccountModel accountModel1 = AccountModel.create(1, "huongntmse03077", "", 1);
         AccountModel accountModel2 = AccountModel.create(2, "anhbt", "", 2);
+
+        //mDatabase.child("account").child(id).setValue(accountModel1);
         dbContext.addAccount(accountModel1);
         dbContext.addAccount(accountModel2);
         //semester
