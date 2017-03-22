@@ -28,10 +28,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.bonz.uniap_fake.R;
 import com.example.bonz.uniap_fake.dbcontext.DBContext;
 import com.example.bonz.uniap_fake.fragment.AttendanceFragment;
-import com.example.bonz.uniap_fake.fragment.NewsFragment;
 import com.example.bonz.uniap_fake.fragment.AttendanceStudentFragment;
 import com.example.bonz.uniap_fake.fragment.NewsFragment;
-
 import com.example.bonz.uniap_fake.fragment.NotificationsFragment;
 import com.example.bonz.uniap_fake.fragment.SettingsFragment;
 import com.example.bonz.uniap_fake.fragment.TimetableFragment;
@@ -176,14 +174,20 @@ public class MainActivity extends AppCompatActivity {
         //temp lecture
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, 1);
-        LectureModel lec1 = LectureModel.create(1, df.format(new Date()), 1, subOfClass1);
-        LectureModel lec2 = LectureModel.create(2, df.format(new Date()), 2, subOfClass1);
-        LectureModel lec3 = LectureModel.create(3, df.format(c.getTime()), 4, subOfClass1);
-        LectureModel lec4 = LectureModel.create(4, df.format(c.getTime()), 6, subOfClass1);
+        LectureModel lec1 = LectureModel.create(1, new Date(), 1, subOfClass1);
+        LectureModel lec2 = LectureModel.create(2, new Date(), 2, subOfClass1);
+        LectureModel lec3 = LectureModel.create(3, c.getTime(), 4, subOfClass1);
+        LectureModel lec4 = LectureModel.create(4, c.getTime(), 6, subOfClass1);
+        c.add(Calendar.DAY_OF_WEEK, 3);
+        LectureModel lec5 = LectureModel.create(5, c.getTime(), 2, subOfClass1);
+        c.add(Calendar.DAY_OF_WEEK, 5);
+        LectureModel lec6 = LectureModel.create(6, c.getTime(), 3, subOfClass1);
         dbContext.addLectureModel(lec1);
         dbContext.addLectureModel(lec2);
         dbContext.addLectureModel(lec3);
         dbContext.addLectureModel(lec4);
+        dbContext.addLectureModel(lec5);
+        dbContext.addLectureModel(lec6);
         //attendance
         dbContext.addAttendance(AttendanceModel.create(1, false, stu1, lec1));
         dbContext.addAttendance(AttendanceModel.create(2, false, stu2, lec1));
@@ -295,10 +299,10 @@ public class MainActivity extends AppCompatActivity {
                 return timetableFragment;
             case 2:
                 // attendance Fragment
-                if(accountModel.getRoll() == Constanst.KEY_ROLL_STUDENT) {
+                if (accountModel.getRoll() == Constanst.KEY_ROLL_STUDENT) {
                     AttendanceStudentFragment attendanceStudentFragment = new AttendanceStudentFragment();
                     return attendanceStudentFragment;
-                } else if(accountModel.getRoll() == Constanst.KEY_ROLL_TEACHER) {
+                } else if (accountModel.getRoll() == Constanst.KEY_ROLL_TEACHER) {
                     AttendanceFragment attendanceFragment = new AttendanceFragment();
                     return attendanceFragment;
                 }

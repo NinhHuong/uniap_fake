@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.bonz.uniap_fake.R;
 import com.example.bonz.uniap_fake.model.AttendanceModel;
-import com.example.bonz.uniap_fake.model.SubjectModel;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -64,7 +63,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         CheckBox ckbIsAttendance = (CheckBox) convertView.findViewById(R.id.ckb_is_attendance);
 
         txtNo.setText(String.valueOf(childPosition + 1));
-        txtDate.setText(attendanceModel.getLectureModel().getDate());
+        txtDate.setText(attendanceModel.getLectureModel().getDate().toString());
         txtTeacher.setText(attendanceModel.getLectureModel().getSubjectOfClassModel().getTeacherModel().getRollNumber());
         txtSlot.setText(String.valueOf(attendanceModel.getLectureModel().getSlot()));
         ckbIsAttendance.setChecked(attendanceModel.getIsAttendance());
@@ -72,7 +71,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         Date date = new Date();
         try {
-            date = Constanst.KEY_DATE_FORMAT.parse(attendanceModel.getLectureModel().getDate());
+            date = Constanst.KEY_DATE_FORMAT.parse(attendanceModel.getLectureModel().getDate().toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
