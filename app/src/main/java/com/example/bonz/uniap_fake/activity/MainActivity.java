@@ -30,7 +30,6 @@ import com.example.bonz.uniap_fake.dbcontext.DBContext;
 import com.example.bonz.uniap_fake.fragment.AttendanceFragment;
 import com.example.bonz.uniap_fake.fragment.NewsFragment;
 import com.example.bonz.uniap_fake.fragment.AttendanceStudentFragment;
-import com.example.bonz.uniap_fake.fragment.NewsFragment;
 
 import com.example.bonz.uniap_fake.fragment.NotificationsFragment;
 import com.example.bonz.uniap_fake.fragment.SettingsFragment;
@@ -47,6 +46,8 @@ import com.example.bonz.uniap_fake.model.SubjectOfClassModel;
 import com.example.bonz.uniap_fake.model.TeacherModel;
 import com.example.bonz.uniap_fake.other.CircleTransform;
 import com.example.bonz.uniap_fake.other.Constanst;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
     // flag to load home fragment when user presses back key
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
+
+    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("root");
 
 
     @Override
@@ -130,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         dbContext = DBContext.getInst();
-        createSampleData();
+        //createSampleData();
         accountModel = dbContext.getAccountByID(2);
     }
 
@@ -139,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
         //account
 
         AccountModel accountModel1 = AccountModel.create(1, "huongntmse03077", "", 1);
-        AccountModel accountModel2 = AccountModel.create(2, "anhbt", "", 2);
-
+        AccountModel accountModel2 = AccountModel.create(2, "anhbt", "1", 2);
+        
         //mDatabase.child("account").child(id).setValue(accountModel1);
         dbContext.addAccount(accountModel1);
         dbContext.addAccount(accountModel2);
@@ -154,25 +157,37 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addTeacher(teacher1);
         //temp student
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.huongntm5);
-        StudentModel stu1 = StudentModel.create(1, 1, "Ninh", "Huong", "abc", "123", "SE03077", BitMapToString(bitmap));
-        StudentModel stu2 = StudentModel.create(2, 2, "Ninh", "Huong2", "abc", "123", "SE03078", BitMapToString(bitmap));
-        StudentModel stu3 = StudentModel.create(3, 3, "Ninh", "Huong3", "abc", "123", "SE03079", BitMapToString(bitmap));
+        StudentModel stu1 = StudentModel.create(2, 2, "Ninh", "Huong", "abc", "123", "SE03077", BitMapToString(bitmap));
+        StudentModel stu2 = StudentModel.create(3, 3, "Ninh", "Huong2", "abc", "123", "SE03078", BitMapToString(bitmap));
+        StudentModel stu3 = StudentModel.create(4, 4, "Ninh", "Huong3", "abc", "123", "SE03079", BitMapToString(bitmap));
         dbContext.addStudent(stu1);
         dbContext.addStudent(stu2);
         dbContext.addStudent(stu3);
+
+        //mDatabase.child("student").child("2").setValue(stu1);
+        //mDatabase.child("student").child("3").setValue(stu2);
+        //mDatabase.child("student").child("4").setValue(stu3);
+        //mDatabase.child("student").child("0").child("photo").setValue(BitMapToString(BitmapFactory.decodeResource(getResources(), R.drawable.se03567)));
+
         //temp class
         ClassModel class1 = ClassModel.create(5, "ES20102", ses1);
         dbContext.addClass(class1);
+        mDatabase.child("class").child("0").setValue(class1);
         //student of class
         dbContext.addStudentOfClass(StudentOfClassModel.create(1, class1, stu1));
         dbContext.addStudentOfClass(StudentOfClassModel.create(2, class1, stu2));
         dbContext.addStudentOfClass(StudentOfClassModel.create(3, class1, stu3));
+        mDatabase.child("studentOfClass").child("0").setValue(StudentOfClassModel.create(0, class1, stu1));
+        mDatabase.child("studentOfClass").child("1").setValue(StudentOfClassModel.create(1, class1, stu1));
+        mDatabase.child("studentOfClass").child("2").setValue(StudentOfClassModel.create(2, class1, stu1));
         //subject
         SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile");
         dbContext.addSubjectModel(sub);
+
         //subject of class
         SubjectOfClassModel subOfClass1 = SubjectOfClassModel.create(1, sub, class1, teacher1);
         dbContext.addSubjectOfClassModel(subOfClass1);
+        mDatabase.child("subject").child("0").setValue(sub);
         //temp lecture
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, 1);
