@@ -278,6 +278,10 @@ public class DBContext {
         return realm.where(StudentOfClassModel.class).findAll();
     }
 
+    public List<StudentOfClassModel> getStudentOfClassesBySubOfClassId(int id){
+        return realm.where(StudentOfClassModel.class).equalTo("subjectOfClassModel.id", id).findAll();
+    }
+
     public StudentOfClassModel getStudentOfClassByID(int id) {
         return realm.where(StudentOfClassModel.class).equalTo("id",id).findFirst();
     }
@@ -464,6 +468,10 @@ public class DBContext {
 
     public List<SubjectOfClassModel> getAllSubjectOfClassModel() {
         return realm.where(SubjectOfClassModel.class).findAll();
+    }
+
+    public List<SubjectOfClassModel> getSubjectOfClassModelsBySemesterId(int semesterId) {
+        return realm.where(SubjectOfClassModel.class).equalTo("classModel.semesterModel.id", semesterId).findAll();
     }
 
     public SubjectOfClassModel getSubjectOfClassModelById(int id) {

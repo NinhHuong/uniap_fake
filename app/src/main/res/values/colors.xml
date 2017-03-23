@@ -12,4 +12,7 @@
     <!---->
     <color name="past_item">#000000</color>
     <color name="future_item">#888</color>
+
+    <!---->
+    <color name="text_link">#01579B</color>
 </resources>

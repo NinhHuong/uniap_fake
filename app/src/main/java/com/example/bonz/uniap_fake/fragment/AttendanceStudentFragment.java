@@ -20,6 +20,7 @@ import com.example.bonz.uniap_fake.model.AttendanceModel;
 import com.example.bonz.uniap_fake.model.SemesterModel;
 import com.example.bonz.uniap_fake.other.Constanst;
 import com.example.bonz.uniap_fake.other.ExpandableListAdapter;
+import com.example.bonz.uniap_fake.other.SemesterSpinnerAdapter;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class AttendanceStudentFragment extends Fragment {
         //semester
         semesterList = dbContext.getAllSemesterModel();
         if(semesterList != null && semesterList.size() > 0) {
-            final SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getContext(), android.R.layout.simple_spinner_item, semesterList);
+            final SemesterSpinnerAdapter spinnerAdapter = new SemesterSpinnerAdapter(getContext(), android.R.layout.simple_spinner_item, semesterList);
             spnSemester.setAdapter(spinnerAdapter);
             for(int i=0; i<semesterList.size(); i++) {
                 try {
@@ -203,47 +204,5 @@ public class AttendanceStudentFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    private class SpinnerAdapter extends ArrayAdapter<SemesterModel> {
-        private Context context;
-        private List<SemesterModel> list;
-
-        public SpinnerAdapter(Context context, int textViewResourceId, List<SemesterModel> list) {
-            super(context, textViewResourceId, list);
-            this.context = context;
-            this.list = list;
-        }
-
-        public int getCount(){
-            return list.size();
-        }
-
-        public SemesterModel getItem(int position){
-            return list.get(position);
-        }
-
-        public long getItemId(int position){
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView label = new TextView(context);
-            label.setTextColor(Color.BLACK);
-            label.setText(list.get(position).getSemesterName());
-
-            return label;
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView,
-                                    ViewGroup parent) {
-            TextView label = new TextView(context);
-            label.setTextColor(Color.BLACK);
-            label.setText(list.get(position).getSemesterName());
-
-            return label;
-        }
     }
 }

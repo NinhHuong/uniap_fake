@@ -14,22 +14,33 @@ public class SubjectModel extends RealmObject {
     private int id;
     private String subjectCode;
     private String subjectName;
+    private int numberCredit;
 
-    public static SubjectModel create(int id, String subjectCode, String subjectName) {
+    public static SubjectModel create(int id, String subjectCode, String subjectName, int numberCredit) {
         SubjectModel sub = new SubjectModel();
         sub.id = id;
         sub.subjectCode = subjectCode;
         sub.subjectName = subjectName;
+        sub.numberCredit = numberCredit;
         return sub;
     }
 
-    public static SubjectModel createWithoutId(String subjectCode, String subjectName) {
+    public static SubjectModel createWithoutId(String subjectCode, String subjectName, int numberCredit) {
         SubjectModel sub = new SubjectModel();
         DBContext dbContext = DBContext.getInst();
         sub.id = dbContext.getMaxSubjectId() + 1;
         sub.subjectCode = subjectCode;
         sub.subjectName = subjectName;
+        sub.numberCredit = numberCredit;
         return sub;
+    }
+
+    public void setNumberCredit(int numberCredit) {
+        this.numberCredit = numberCredit;
+    }
+
+    public int getNumberCredit() {
+        return numberCredit;
     }
 
     public void setId(int id) {

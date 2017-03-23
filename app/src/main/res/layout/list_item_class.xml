@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dip"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:id="@+id/txt_no"
+        android:background="@drawable/textview_boder"
+        android:text="1"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:id="@+id/txt_class_name"
+        android:background="@drawable/textview_boder"
+        android:text="ES10102"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:id="@+id/txt_subject_code"
+        android:background="@drawable/textview_boder"
+        android:text="VNR201"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="match_parent"
+        android:textColor="#000000"
+        android:ellipsize="none"
+        android:maxLines="2"
+        android:gravity="center_vertical|left"
+        android:id="@+id/txt_subject_name"
+        android:background="@drawable/textview_boder"
+        android:text="Revolutionary line of CPV"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:id="@+id/txt_credit"
+        android:background="@drawable/textview_boder"
+        android:text="2"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:id="@+id/txt_start"
+        android:background="@drawable/textview_boder"
+        android:text="05/01/ 2017"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:id="@+id/txt_end"
+        android:background="@drawable/textview_boder"
+        android:text="05/05/ 2017"/>
+</LinearLayout>

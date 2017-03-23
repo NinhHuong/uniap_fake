@@ -15,22 +15,22 @@ public class StudentOfClassModel extends RealmObject {
     @PrimaryKey
     private int id;
 
-    private ClassModel classModel;
+    private SubjectOfClassModel subjectOfClassModel;
     private StudentModel studentModel;
 
-    public static StudentOfClassModel create(int id, ClassModel classModel, StudentModel studentModel) {
+    public static StudentOfClassModel create(int id, SubjectOfClassModel subjectOfClassModel, StudentModel studentModel) {
         StudentOfClassModel studentOfClassModel = new StudentOfClassModel();
         studentOfClassModel.id = id;
-        studentOfClassModel.classModel = classModel;
+        studentOfClassModel.subjectOfClassModel = subjectOfClassModel;
         studentOfClassModel.studentModel = studentModel;
         return studentOfClassModel;
     }
 
-    public static StudentOfClassModel createWithoutId(ClassModel classModel, StudentModel studentModel) {
+    public static StudentOfClassModel createWithoutId(SubjectOfClassModel subjectOfClassModel, StudentModel studentModel) {
         StudentOfClassModel studentOfClassModel = new StudentOfClassModel();
         DBContext dbContext = DBContext.getInst();
         studentOfClassModel.id = dbContext.getMaxStudentOfClassId() + 1;
-        studentOfClassModel.classModel = classModel;
+        studentOfClassModel.subjectOfClassModel = subjectOfClassModel;
         studentOfClassModel.studentModel = studentModel;
         return studentOfClassModel;
     }
@@ -43,16 +43,16 @@ public class StudentOfClassModel extends RealmObject {
         this.id = id;
     }
 
-    public ClassModel getClassModel() {
-        return classModel;
+    public SubjectOfClassModel getClassModel() {
+        return subjectOfClassModel;
     }
 
     public StudentModel getStudentModel() {
         return studentModel;
     }
 
-    public void setClassModel(ClassModel classModel) {
-        this.classModel = classModel;
+    public void setClassModel(SubjectOfClassModel subjectOfClassModel) {
+        this.subjectOfClassModel = subjectOfClassModel;
     }
 
     public void setStudentModel(StudentModel studentModel) {

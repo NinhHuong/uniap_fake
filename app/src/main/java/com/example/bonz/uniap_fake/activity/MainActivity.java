@@ -33,6 +33,7 @@ import com.example.bonz.uniap_fake.fragment.AttendanceStudentFragment;
 import com.example.bonz.uniap_fake.fragment.NewsFragment;
 
 import com.example.bonz.uniap_fake.fragment.NotificationsFragment;
+import com.example.bonz.uniap_fake.fragment.OnGoingClassFragment;
 import com.example.bonz.uniap_fake.fragment.SettingsFragment;
 import com.example.bonz.uniap_fake.fragment.TimetableFragment;
 import com.example.bonz.uniap_fake.model.AccountModel;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_HOME = "home";
     private static final String TAG_PHOTOS = "photos";
     private static final String TAG_ATTENDANCE = "take attendance";
+    private static final String TAG_ONGOING_CLASS = "ongoing class";
     private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_SETTINGS = "settings";
     // index to identify current nav menu item
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgNavHeaderBg, imgProfile;
     private TextView txtName, txtWebsite;
     private Toolbar toolbar;
-    private FloatingActionButton fab;
+//    private FloatingActionButton fab;
     private AccountModel accountModel;
     // toolbar titles respected to selected nav menu item
     private String[] activityTitles;
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
@@ -109,13 +111,13 @@ public class MainActivity extends AppCompatActivity {
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        /*fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         // load nav menu header data
         loadNavHeader();
@@ -167,16 +169,16 @@ public class MainActivity extends AppCompatActivity {
         //temp class
         ClassModel class1 = ClassModel.create(5, "ES20102", ses1);
         dbContext.addClass(class1);
-        //student of class
-        dbContext.addStudentOfClass(StudentOfClassModel.create(1, class1, stu1));
-        dbContext.addStudentOfClass(StudentOfClassModel.create(2, class1, stu2));
-        dbContext.addStudentOfClass(StudentOfClassModel.create(3, class1, stu3));
         //subject
-        SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile");
+        SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile", 3);
         dbContext.addSubjectModel(sub);
         //subject of class
         SubjectOfClassModel subOfClass1 = SubjectOfClassModel.create(1, sub, class1, teacher1);
         dbContext.addSubjectOfClassModel(subOfClass1);
+        //student of class
+        dbContext.addStudentOfClass(StudentOfClassModel.create(1, subOfClass1, stu1));
+        dbContext.addStudentOfClass(StudentOfClassModel.create(2, subOfClass1, stu2));
+        dbContext.addStudentOfClass(StudentOfClassModel.create(3, subOfClass1, stu3));
         //temp lecture
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, 1);
@@ -231,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
                 .into(imgProfile);
 
         // showing dot next to notifications label
-        navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
+        navigationView.getMenu().getItem(1).setActionView(R.layout.menu_dot);
     }
 
     /***
@@ -251,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
             drawer.closeDrawers();
 
             // show or hide the fab button
-            toggleFab();
+//            toggleFab();
             return;
         }
 
@@ -278,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // show or hide the fab button
-        toggleFab();
+//        toggleFab();
 
         //Closing drawer on item click
         drawer.closeDrawers();
@@ -290,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
             case 0:
-                // home
+                // news
                 NewsFragment newsFragment = new NewsFragment();
                 return newsFragment;
             case 1:
@@ -306,12 +308,16 @@ public class MainActivity extends AppCompatActivity {
                     AttendanceFragment attendanceFragment = new AttendanceFragment();
                     return attendanceFragment;
                 }
+                // ongoing Class Fragment
             case 3:
+                OnGoingClassFragment onGoingClassFragment = new OnGoingClassFragment();
+                return onGoingClassFragment;
+            case 4:
                 // notifications fragment
                 NotificationsFragment notificationsFragment = new NotificationsFragment();
                 return notificationsFragment;
 
-            case 4:
+            case 5:
                 // settings fragment
                 SettingsFragment settingsFragment = new SettingsFragment();
                 return settingsFragment;
@@ -343,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_HOME;
                         break;
-                    case R.id.nav_photos:
+                    case R.id.nav_timetable:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_PHOTOS;
                         break;
@@ -351,12 +357,16 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_ATTENDANCE;
                         break;
-                    case R.id.nav_notifications:
+                    case R.id.nav_class:
                         navItemIndex = 3;
+                        CURRENT_TAG = TAG_ONGOING_CLASS;
+                        break;
+                    case R.id.nav_notifications:
+                        navItemIndex = 4;
                         CURRENT_TAG = TAG_NOTIFICATIONS;
                         break;
                     case R.id.nav_settings:
-                        navItemIndex = 4;
+                        navItemIndex = 5;
                         CURRENT_TAG = TAG_SETTINGS;
                         break;
                     case R.id.nav_about_us:
@@ -438,12 +448,12 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
 
         // show menu only when home fragment is selected
-        if (navItemIndex == 0) {
+        /*if (navItemIndex == 0) {
             getMenuInflater().inflate(R.menu.main, menu);
-        }
+        }*/
 
         // when fragment is notifications, load the menu created for notifications
-        if (navItemIndex == 3) {
+        if (navItemIndex == 0) {
             getMenuInflater().inflate(R.menu.notifications, menu);
         }
         return true;
@@ -478,10 +488,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // show or hide the fab
-    private void toggleFab() {
+    /*private void toggleFab() {
         if (navItemIndex == 0)
             fab.show();
         else
             fab.hide();
-    }
+    }*/
 }
