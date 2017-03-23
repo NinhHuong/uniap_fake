@@ -1,13 +1,42 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bonz.uniap_fake.fragment.NotificationsFragment">
+    android:layout_marginRight="@dimen/text_margin"
+    android:layout_marginLeft="@dimen/text_margin"
+    android:layout_marginTop="@dimen/text_margin"
+    android:layout_marginEnd="@dimen/text_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.bonz.uniap_fake.activity.ProfileActivity"
+    tools:showIn="@layout/activity_profile">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginLeft="@dimen/text_margin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/nav_notifications" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:text="Username: "/>
+            <TextView
+                android:layout_weight="3"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:text="username"
+                android:id="@+id/txt_username_profile"/>
+        </LinearLayout>
 
-</FrameLayout>
+
+    </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

@@ -6,6 +6,7 @@ import com.example.bonz.uniap_fake.model.ClassModel;
 import com.example.bonz.uniap_fake.model.LectureModel;
 import com.example.bonz.uniap_fake.model.NewsModel;
 import com.example.bonz.uniap_fake.model.SemesterModel;
+import com.example.bonz.uniap_fake.model.StudentOfClassModel;
 import com.example.bonz.uniap_fake.model.StudentModel;
 import com.example.bonz.uniap_fake.model.StudentOfClassModel;
 import com.example.bonz.uniap_fake.model.SubjectModel;
@@ -30,6 +31,8 @@ public class DBContext {
         realm = Realm.getDefaultInstance();
     }
 
+    private static DBContext inst;
+
     public static DBContext getInst() {
         if (inst == null) {
             return new DBContext();
@@ -38,7 +41,7 @@ public class DBContext {
     }
 
     //==============================================================================================
-    //AccountModel
+    //region AccountModel
     //addAccount or updateAccount
     public void addAccount(AccountModel model) {
         realm.beginTransaction();
@@ -47,6 +50,14 @@ public class DBContext {
     }
 
     public List<AccountModel> getAllAccount() {
+    public int getMaxAccountId() {
+        try{
+            return realm.where(AccountModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
+    }
+
+    public List<AccountModel> getAllAccount(){
         return realm.where(AccountModel.class).findAll();
     }
 
@@ -75,7 +86,7 @@ public class DBContext {
     }
 
     //==============================================================================================
-    //NewsModel
+    //region NewsModel
     //addNews or updateNews
     public void addNews(NewsModel model) {
         realm.beginTransaction();
@@ -83,16 +94,24 @@ public class DBContext {
         realm.commitTransaction();
     }
 
+    public int getMaxNewId() {
+        try{
+            return realm.where(NewsModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
+    }
+
+    public List<NewsModel> getAllNews(){
     public List<NewsModel> getAllNews() {
         return realm.where(NewsModel.class).findAll();
     }
 
     public NewsModel getNewsByID(int id) {
-        return realm.where(NewsModel.class).equalTo("id", id).findFirst();
+        return realm.where(NewsModel.class).equalTo("id",id).findFirst();
     }
 
-    public void removeSingleNews(int id) {
-        final NewsModel result = realm.where(NewsModel.class).equalTo("id", id).findFirst();
+    public void removeSingleNews(int id){
+        final NewsModel result = realm.where(NewsModel.class).equalTo("id",id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -101,7 +120,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllNews() {
+    public void deleteAllNews(){
         final RealmResults<NewsModel> result = realm.where(NewsModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -110,26 +129,37 @@ public class DBContext {
             }
         });
     }
-
+    //endregion
 
     //==============================================================================================
-    //StudentModel
-    public void addStudent(StudentModel model) {
+    //region StudentModel
+    public void addStudent(StudentModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<StudentModel> getAllStudent() {
+    public int getMaxStudentId() {
+        try{
+            return realm.where(StudentModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
+    }
+
+    public StudentModel getStudentByAccountID(int id) {
+        return realm.where(StudentModel.class).equalTo("accountModel.id",id).findFirst();
+    }
+
+    public List<StudentModel> getAllStudent(){
         return realm.where(StudentModel.class).findAll();
     }
 
     public StudentModel getStudentByID(int id) {
-        return realm.where(StudentModel.class).equalTo("id", id).findFirst();
+        return realm.where(StudentModel.class).equalTo("id",id).findFirst();
     }
 
-    public void removeSingleStudent(int id) {
-        final StudentModel result = realm.where(StudentModel.class).equalTo("id", id).findFirst();
+    public void removeSingleStudent(int id){
+        final StudentModel result = realm.where(StudentModel.class).equalTo("id",id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -138,7 +168,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllStudent() {
+    public void deleteAllStudent(){
         final RealmResults<StudentModel> result = realm.where(StudentModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -149,13 +179,25 @@ public class DBContext {
     }
 
     //==============================================================================================
-    //TeacherModel
-    public void addTeacher(TeacherModel model) {
+    //region TeacherModel
+    public void addTeacher(TeacherModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
+    public int getMaxTeacherId() {
+        try{
+            return realm.where(TeacherModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
+    }
+
+    public TeacherModel getTeacherByAccountID(int id) {
+        return realm.where(TeacherModel.class).equalTo("accountModel.id",id).findFirst();
+    }
+
+    public List<TeacherModel> getAllTeacher(){
     public List<TeacherModel> getAllTeacher() {
         return realm.where(TeacherModel.class).findAll();
     }
@@ -183,25 +225,33 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //ClassModel
-    public void addClass(ClassModel model) {
+    //region ClassModel
+    public void addClass(ClassModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<ClassModel> getAllClass() {
+    public int getMaxClassId() {
+        try{
+            return realm.where(ClassModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
+    }
+
+    public List<ClassModel> getAllClass(){
         return realm.where(ClassModel.class).findAll();
     }
 
     public ClassModel getClassByID(int id) {
-        return realm.where(ClassModel.class).equalTo("id", id).findFirst();
+        return realm.where(ClassModel.class).equalTo("id",id).findFirst();
     }
 
-    public void removeSingleClass(int id) {
-        final ClassModel result = realm.where(ClassModel.class).equalTo("id", id).findFirst();
+    public void removeSingleClass(int id){
+        final ClassModel result = realm.where(ClassModel.class).equalTo("id",id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -210,7 +260,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllClass() {
+    public void deleteAllClass(){
         final RealmResults<ClassModel> result = realm.where(ClassModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -219,25 +269,37 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //StudentOfClassModel
-    public void addStudentOfClass(StudentOfClassModel model) {
+    //region StudentOfClassModel
+    public void addStudentOfClass(StudentOfClassModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<StudentOfClassModel> getAllStudentOfClass() {
+    public int getMaxStudentOfClassId() {
+        try{
+            return realm.where(StudentOfClassModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
+    }
+
+    public List<StudentOfClassModel> getAllStudentOfClass(){
         return realm.where(StudentOfClassModel.class).findAll();
     }
 
-    public StudentOfClassModel getStudentOfClassByID(int id) {
-        return realm.where(StudentOfClassModel.class).equalTo("id", id).findFirst();
+    public List<StudentOfClassModel> getStudentOfClassesBySubOfClassId(int id){
+        return realm.where(StudentOfClassModel.class).equalTo("subjectOfClassModel.id", id).findAll();
     }
 
-    public void removeSingleStudentOfClassModel(int id) {
-        final StudentOfClassModel result = realm.where(StudentOfClassModel.class).equalTo("id", id).findFirst();
+    public StudentOfClassModel getStudentOfClassByID(int id) {
+        return realm.where(StudentOfClassModel.class).equalTo("id",id).findFirst();
+    }
+
+    public void removeSingleStudentOfClassModel(int id){
+        final StudentOfClassModel result = realm.where(StudentOfClassModel.class).equalTo("id",id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -246,7 +308,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllStudentOfClass() {
+    public void deleteAllStudentOfClass(){
         final RealmResults<StudentOfClassModel> result = realm.where(StudentOfClassModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -255,33 +317,41 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //AttendanceModel
-    public void addAttendance(AttendanceModel model) {
+    //region AttendanceModel
+    public void addAttendance(AttendanceModel model){
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<AttendanceModel> getAllAttendance() {
+    public int getMaxAttendanceId() {
+        try{
+            return realm.where(AttendanceModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
+    }
+
+    public List<AttendanceModel> getAllAttendance(){
         return realm.where(AttendanceModel.class).findAll();
     }
 
     public AttendanceModel getAttendanceByID(int id) {
-        return realm.where(AttendanceModel.class).equalTo("id", id).findFirst();
+        return realm.where(AttendanceModel.class).equalTo("id",id).findFirst();
     }
 
     public List<AttendanceModel> getAttendanceBySemesterId(int id) {
-        return realm.where(AttendanceModel.class).equalTo("lectureModel.subjectOfClassModel.classModel.semesterModel.id", id).findAll();
+        return realm.where(AttendanceModel.class).equalTo("lectureModel.subjectOfClassModel.classModel.semesterModel.id",id).findAll();
     }
 
     public List<AttendanceModel> getAttendanceByLectureId(int id) {
-        return realm.where(AttendanceModel.class).equalTo("lectureModel.id", id).findAll();
+        return realm.where(AttendanceModel.class).equalTo("lectureModel.id",id).findAll();
     }
 
-    public void removeSingleAttendance(int id) {
-        final AttendanceModel result = realm.where(AttendanceModel.class).equalTo("id", id).findFirst();
+    public void removeSingleAttendance(int id){
+        final AttendanceModel result = realm.where(AttendanceModel.class).equalTo("id",id).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -290,7 +360,7 @@ public class DBContext {
         });
     }
 
-    public void deleteAllAttendance() {
+    public void deleteAllAttendance(){
         final RealmResults<AttendanceModel> result = realm.where(AttendanceModel.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -299,13 +369,21 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //SemesterModel
+    //region SemesterModel
     public void addSemesterModel(SemesterModel model) {
-        realm.beginTransaction();
+        realm.beginTransaction();;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxSemesterId() {
+        try{
+            return realm.where(SemesterModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<SemesterModel> getAllSemesterModel() {
@@ -335,22 +413,25 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //LectureModel
+    //region LectureModel
     public void addLectureModel(LectureModel model) {
-        realm.beginTransaction();
+        realm.beginTransaction();;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
-    public List<LectureModel> getAllLectureModel() {
-        return realm.where(LectureModel.class).findAll();
+    public int getMaxLectureId() {
+        try{
+            return realm.where(LectureModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
-    public List<LectureModel> getAllLectureByDate(Date from, Date to) {
-        List<LectureModel> realmResults = realm.where(LectureModel.class).between("date", from, to).findAll();
-        return realmResults;
+    public List<LectureModel> getAllLectureModel() {
+        return realm.where(LectureModel.class).findAll();
     }
 
     public LectureModel getLectureModelById(int id) {
@@ -380,17 +461,29 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //SubjectOfClassModel
+    //region SubjectOfClassModel
     public void addSubjectOfClassModel(SubjectOfClassModel model) {
-        realm.beginTransaction();
+        realm.beginTransaction();;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
 
+    public int getMaxSubjectOfClassId() {
+        try{
+            return realm.where(StudentOfClassModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
+    }
+
     public List<SubjectOfClassModel> getAllSubjectOfClassModel() {
         return realm.where(SubjectOfClassModel.class).findAll();
+    }
+
+    public List<SubjectOfClassModel> getSubjectOfClassModelsBySemesterId(int semesterId) {
+        return realm.where(SubjectOfClassModel.class).equalTo("classModel.semesterModel.id", semesterId).findAll();
     }
 
     public SubjectOfClassModel getSubjectOfClassModelById(int id) {
@@ -416,13 +509,21 @@ public class DBContext {
             }
         });
     }
+    //endregion
 
     //==============================================================================================
-    //SubjectModel
+    //region SubjectModel
     public void addSubjectModel(SubjectModel model) {
-        realm.beginTransaction();
+        realm.beginTransaction();;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+    public int getMaxSubjectId() {
+        try{
+            return realm.where(SubjectModel.class).max("id").intValue();
+        } catch(Exception ex){}
+        return 0;
     }
 
     public List<SubjectModel> getAllSubjectModel() {
@@ -452,6 +553,6 @@ public class DBContext {
             }
         });
     }
-
+    //endregion
 
 }

@@ -33,6 +33,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.TakeAttendanceActivity" />
         <activity android:name=".activity.NewsInfoActivity" />
+        <activity android:name=".activity.ViewStudentOfClassActivity" />
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activity.TimetableDetailActivity" />
     </application>
 

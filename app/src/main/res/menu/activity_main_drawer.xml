@@ -7,14 +7,17 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/nav_home" />
         <item
-            android:id="@+id/nav_photos"
+            android:id="@+id/nav_timetable"
             android:icon="@drawable/ic_timetable_black_24dp"
             android:title="@string/nav_schedule" />
         <item
             android:id="@+id/nav_attendance"
             android:icon="@drawable/ic_local_attendance_black_24dp"
             android:title="@string/nav_attendance" />
-
+        <item
+            android:id="@+id/nav_class"
+            android:icon="@drawable/ic_ongoing_class_black_24dp"
+            android:title="@string/nav_class"/>
         <item
             android:id="@+id/nav_notifications"
             android:icon="@drawable/ic_notifications_black_24dp"

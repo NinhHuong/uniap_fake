@@ -1,7 +1,6 @@
 package com.example.bonz.uniap_fake.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,34 +8,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.bonz.uniap_fake.R;
 import com.example.bonz.uniap_fake.dbcontext.DBContext;
-import com.example.bonz.uniap_fake.model.AttendanceModel;
 import com.example.bonz.uniap_fake.model.SemesterModel;
+import com.example.bonz.uniap_fake.model.SubjectOfClassModel;
 import com.example.bonz.uniap_fake.other.Constanst;
 import com.example.bonz.uniap_fake.other.ExpandableListAdapter;
+import com.example.bonz.uniap_fake.other.ListViewClassAdapter;
 import com.example.bonz.uniap_fake.other.SemesterSpinnerAdapter;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AttendanceStudentFragment.OnFragmentInteractionListener} interface
+ * {@link OnGoingClassFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AttendanceStudentFragment#newInstance} factory method to
+ * Use the {@link OnGoingClassFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AttendanceStudentFragment extends Fragment {
+public class OnGoingClassFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,20 +42,16 @@ public class AttendanceStudentFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ExpandableListView expListView;
     private Spinner spnSemester;
+    private ListView lvClass;
+    private DBContext dbContext;
     private List<SemesterModel> semesterList;
-    private List<AttendanceModel> attendanceList;
     private SemesterModel semesterModel;
-    private ExpandableListAdapter expAdapter;
-    private List<String> headerList;
-    private HashMap<String, List<AttendanceModel>> childData;
-    //
-    DBContext dbContext;
+    private List<SubjectOfClassModel> subjectOfClassModelList;
 
     private OnFragmentInteractionListener mListener;
 
-    public AttendanceStudentFragment() {
+    public OnGoingClassFragment() {
         // Required empty public constructor
     }
 
@@ -69,11 +61,11 @@ public class AttendanceStudentFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AttendanceStudentFragment.
+     * @return A new instance of fragment OnGoingClassFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AttendanceStudentFragment newInstance(String param1, String param2) {
-        AttendanceStudentFragment fragment = new AttendanceStudentFragment();
+    public static OnGoingClassFragment newInstance(String param1, String param2) {
+        OnGoingClassFragment fragment = new OnGoingClassFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -84,14 +76,19 @@ public class AttendanceStudentFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
+        if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
-    }@Override
+        }
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        init();
+
+        spnSemester = (Spinner) getView().findViewById(R.id.spn_semester);
+        lvClass = (ListView) getView().findViewById(R.id.lv_class);
+
         //
         dbContext = DBContext.getInst();
         //semester
@@ -112,13 +109,15 @@ public class AttendanceStudentFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+
             spnSemester.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     semesterModel = spinnerAdapter.getItem(i);
-                    //update data
-                    prepareData();expAdapter = new ExpandableListAdapter(getContext(), headerList, childData);
-                    expListView.setAdapter(expAdapter);
+                    //update data//
+                    subjectOfClassModelList = dbContext.getSubjectOfClassModelsBySemesterId(semesterModel.getId());
+                    ListViewClassAdapter listViewClassAdapter = new ListViewClassAdapter(getContext(), subjectOfClassModelList);
+                    lvClass.setAdapter(listViewClassAdapter);
                 }
 
                 @Override
@@ -126,45 +125,20 @@ public class AttendanceStudentFragment extends Fragment {
 
                 }
             });
-        }
-        //attendance
-        if(semesterModel != null) {
-            prepareData();
-            expAdapter = new ExpandableListAdapter(getContext(), headerList, childData);
-            expListView.setAdapter(expAdapter);
+
+            //
+            subjectOfClassModelList = dbContext.getSubjectOfClassModelsBySemesterId(semesterModel.getId());
+            ListViewClassAdapter listViewClassAdapter = new ListViewClassAdapter(getContext(), subjectOfClassModelList);
+            lvClass.setAdapter(listViewClassAdapter);
         }
     }
 
-    private void init() {
-        expListView = (ExpandableListView) getView().findViewById(R.id.exp_list_view);
-        spnSemester = (Spinner) getView().findViewById(R.id.spn_semester);
-    }
-
-    private void prepareData() {
-        headerList = new ArrayList<>();
-        childData = new HashMap<>();
-        attendanceList = dbContext.getAttendanceBySemesterId(semesterModel.getId());
-        if(attendanceList != null && attendanceList.size() > 0) {
-            for(AttendanceModel a : attendanceList)  {
-                String subject = a.getLectureModel().getSubjectOfClassModel().getSubjectModel().getSubjectName();
-                List<AttendanceModel> temp = new ArrayList<>();
-                if(childData != null && childData.containsKey(subject)) {
-                    temp = childData.get(subject);
-                    childData.remove(subject);
-                } else {
-                    headerList.add(subject);
-                }
-                temp.add(a);
-                childData.put(subject, temp);
-            }
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_attendance_student, container, false);
+        return inflater.inflate(R.layout.fragment_on_going_class, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
