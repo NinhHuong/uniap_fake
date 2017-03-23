@@ -6,17 +6,18 @@
     <color name="medium_dark_gray">#444</color>
     <color name="medium_gray">#888</color>
 
+    <color name="box1">#a3e680</color>
+    <color name="box2">#80abe6</color>
+    <color name="box3">#fffc62</color>
+    <color name="box4">#ff9294</color>
+    <color name="box5">#ffc481</color>
+
+
     <!---->
     <color name="list_group">#f9f93d</color>
     <color name="list_item">#000000</color>
     <!---->
     <color name="past_item">#000000</color>
     <color name="future_item">#888</color>
-
-    <color name="box1">#a3e680</color>
-    <color name="box2">#80abe6</color>
-    <color name="box3">#fffc62</color>
-    <color name="box4">#ff9294</color>
-    <color name="box5">#ffc481</color>
 
 </resources>
