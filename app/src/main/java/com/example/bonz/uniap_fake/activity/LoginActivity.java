@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void writeNewAccount() {
 
-        // mDatabase.child("account").child(String.valueOf(4)).setValue(AccountModel.create(4, "bbb", "1", 1));
+        //mDatabase.child("account").child(id).setValue(AccountModel.create(4, "bbb", "1", 1));
     }
 
     //read Database from Firebase
