@@ -56,6 +56,14 @@ public class StudentModel extends RealmObject {
         return studentModel;
     }
 
+    public AccountModel getAccountModel() {
+        return accountModel;
+    }
+
+    public void setAccountModel(AccountModel accountModel) {
+        this.accountModel = accountModel;
+    }
+
     public AccountModel getAccountId() {
         return accountModel;
     }

@@ -142,6 +142,10 @@ public class DBContext {
         return 0;
     }
 
+    public StudentModel getStudentByAccountID(int id) {
+        return realm.where(StudentModel.class).equalTo("accountModel.id",id).findFirst();
+    }
+
     public List<StudentModel> getAllStudent(){
         return realm.where(StudentModel.class).findAll();
     }
@@ -184,6 +188,10 @@ public class DBContext {
             return realm.where(TeacherModel.class).max("id").intValue();
         } catch(Exception ex){}
         return 0;
+    }
+
+    public TeacherModel getTeacherByAccountID(int id) {
+        return realm.where(TeacherModel.class).equalTo("accountModel.id",id).findFirst();
     }
 
     public List<TeacherModel> getAllTeacher(){

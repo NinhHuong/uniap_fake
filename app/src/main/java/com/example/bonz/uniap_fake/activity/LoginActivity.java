@@ -197,6 +197,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     dbContext.addTeacher(model);
 
                 }
+                //Log.d("testTeacher", "Value is: " + dbContext.getAllTeacher().get(0).getAccountModel());
 
             }
 
@@ -215,7 +216,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     dbContext.addStudent(model);
 
                 }
-                //Log.d("testStudent", "Value is: " + dbContext.getAllStudent().toString());
+                //Log.d("testStudent", "Value is: " + dbContext.getAllStudent().get(0));
 
             }
 

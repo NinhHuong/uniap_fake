@@ -397,8 +397,10 @@ public class MainActivity extends AppCompatActivity {
                 return onGoingClassFragment;
             case 4:
                 // notifications fragment
-                NotificationsFragment notificationsFragment = new NotificationsFragment();
-                return notificationsFragment;
+                //Intent intent = new Intent(this, ProfileActivity.class);
+                //startActivity(intent);
+                //NotificationsFragment notificationsFragment = new NotificationsFragment();
+                //return notificationsFragment;
 
             case 5:
                 // settings fragment
@@ -445,8 +447,10 @@ public class MainActivity extends AppCompatActivity {
                         CURRENT_TAG = TAG_ONGOING_CLASS;
                         break;
                     case R.id.nav_notifications:
-                        navItemIndex = 4;
-                        CURRENT_TAG = TAG_NOTIFICATIONS;
+//                        navItemIndex = 4;
+//                        CURRENT_TAG = TAG_NOTIFICATIONS;
+                        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                        drawer.closeDrawers();
                         break;
                     case R.id.nav_settings:
                         navItemIndex = 5;
