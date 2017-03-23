@@ -1,6 +1,7 @@
 package com.example.bonz.uniap_fake.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bonz.uniap_fake.R;
+import com.example.bonz.uniap_fake.activity.TimetableDetailActivity;
 import com.example.bonz.uniap_fake.dbcontext.DBContext;
 import com.example.bonz.uniap_fake.model.LectureModel;
 import com.example.bonz.uniap_fake.model.SubjectModel;
@@ -103,6 +105,16 @@ public class TimetableFragment extends Fragment {
         thuView = (LinearLayout) view.findViewById(R.id.thursdayLayout);
         friView = (LinearLayout) view.findViewById(R.id.fridayLayout);
         satView = (LinearLayout) view.findViewById(R.id.saturdayLayout);
+
+//        for(int i=0; i<monView.getChildCount(); i++) {
+//            TextView slot = (TextView) monView.getChildAt(i);
+//            slot.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    slot.getText().
+//                }
+//            });
+//        }
 
         //get each day TextView
         monDay = (TextView) view.findViewById(R.id.mondayDateTextView);
@@ -203,34 +215,87 @@ public class TimetableFragment extends Fragment {
 
 
     //Set data for each slot TextView
-    private void setSlot(LinearLayout layout, LectureModel lectureModel) {
+    private void setSlot(LinearLayout layout, final LectureModel lectureModel) {
         TextView slot1 = (TextView) layout.getChildAt(0);
         TextView slot2 = (TextView) layout.getChildAt(1);
         TextView slot3 = (TextView) layout.getChildAt(2);
         TextView slot4 = (TextView) layout.getChildAt(3);
         TextView slot5 = (TextView) layout.getChildAt(4);
         TextView slot6 = (TextView) layout.getChildAt(5);
+
         SubjectOfClassModel subjectOfClassModel = lectureModel.getSubjectOfClassModel();
-        SubjectModel subjectModel = subjectOfClassModel.getSubjectModel();
+        final SubjectModel subjectModel = subjectOfClassModel.getSubjectModel();
         switch (lectureModel.getSlot()) {
             case 1:
                 slot1.setText(subjectModel.getSubjectCode());
+                slot1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int id = lectureModel.getId();
+                        startSubjectDetailActi(id);
+                    }
+                });
                 break;
             case 2:
                 slot2.setText(subjectModel.getSubjectCode());
+                slot2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int id = lectureModel.getId();
+                        startSubjectDetailActi(id);
+                    }
+                });
                 break;
             case 3:
                 slot3.setText(subjectModel.getSubjectCode());
+                slot3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int id = lectureModel.getId();
+                        startSubjectDetailActi(id);
+                    }
+                });
                 break;
             case 4:
                 slot4.setText(subjectModel.getSubjectCode());
+                slot4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int id = lectureModel.getId();
+                        startSubjectDetailActi(id);
+                    }
+                });
                 break;
             case 5:
                 slot5.setText(subjectModel.getSubjectCode());
+                slot5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int id = lectureModel.getId();
+                        startSubjectDetailActi(id);
+                    }
+                });
                 break;
             case 6:
                 slot6.setText(subjectModel.getSubjectCode());
+                slot6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int id = lectureModel.getId();
+                        startSubjectDetailActi(id);
+                    }
+                });
                 break;
+        }
+    }
+
+    private void startSubjectDetailActi(int id) {
+        try {
+            Intent slotDetail = new Intent(getContext(), TimetableDetailActivity.class);
+            slotDetail.putExtra("lectureId", id);
+            startActivity(slotDetail);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -279,7 +344,9 @@ public class TimetableFragment extends Fragment {
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
                 View view = linearLayout.getChildAt(i);
                 if (view instanceof TextView) {
-                    ((TextView) view).setText("");
+                    TextView child = ((TextView) view);
+                    child.setText("");
+                    child.setOnClickListener(null);
                 }
             }
         }
