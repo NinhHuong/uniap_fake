@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         dbContext = DBContext.getInst();
-        //createSampleData();
+        createSampleData();
         accountModel = dbContext.getAllAccount().get(0);
         if(accountModel.getRoll()==1){
             infoAccountStudent = dbContext.getAllStudent().get(0);
@@ -147,9 +147,9 @@ public class MainActivity extends AppCompatActivity {
             loadHomeFragment();
         }
 
-        dbContext = DBContext.getInst();
-        createSampleData();
-        accountModel = dbContext.getAccountByID(1);
+//        dbContext = DBContext.getInst();
+//        createSampleData();
+//        accountModel = dbContext.getAccountByID(1);
     }
 
     private void createSampleData() {
@@ -165,14 +165,21 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addAccount(accountModel2);
         dbContext.addAccount(accountModel3);
         dbContext.addAccount(accountModel4);
+        mDatabase.child("Account").child(String.valueOf(accountModel1.getId())).setValue(accountModel1);
+        mDatabase.child("Account").child(String.valueOf(accountModel2.getId())).setValue(accountModel2);
+        mDatabase.child("Account").child(String.valueOf(accountModel3.getId())).setValue(accountModel3);
+        mDatabase.child("Account").child(String.valueOf(accountModel4.getId())).setValue(accountModel4);
         //semester
         SemesterModel ses1 = SemesterModel.create(1, "Spring 2017", "05/01/2017", "30/04/2017");
         SemesterModel ses2 = SemesterModel.create(2, "Spring 2016", "05/01/2016", "30/04/2016");
         dbContext.addSemesterModel(ses1);
         dbContext.addSemesterModel(ses2);
+        mDatabase.child("Semester").child(String.valueOf(ses1.getId())).setValue(ses1);
+        mDatabase.child("Semester").child(String.valueOf(ses2.getId())).setValue(ses2);
         //temp teacher
         TeacherModel teacher1 = TeacherModel.create(5, "Bui", "Anh", "abc", "123", "TA123", null, accountModel4);
         dbContext.addTeacher(teacher1);
+        mDatabase.child("Teacher").child(String.valueOf(teacher1.getId())).setValue(teacher1);
         //temp student
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.huongntm5);
         StudentModel stu1 = StudentModel.create(1, "Nguyen", "hoa", "abc", "123", "SE03077", BitMapToString(bitmap), accountModel1);
@@ -181,23 +188,31 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addStudent(stu1);
         dbContext.addStudent(stu2);
         dbContext.addStudent(stu3);
+        mDatabase.child("Student").child(String.valueOf(stu1.getId())).setValue(stu1);
+        mDatabase.child("Student").child(String.valueOf(stu2.getId())).setValue(stu2);
+        mDatabase.child("Student").child(String.valueOf(stu3.getId())).setValue(stu3);
         //temp class
         ClassModel class1 = ClassModel.create(5, "ES20102", ses1);
         dbContext.addClass(class1);
-        //student of class
-        dbContext.addStudentOfClass(StudentOfClassModel.create(1, class1, stu1));
-        dbContext.addStudentOfClass(StudentOfClassModel.create(2, class1, stu2));
-        dbContext.addStudentOfClass(StudentOfClassModel.create(3, class1, stu3));
+        mDatabase.child("Class").child(String.valueOf(class1.getId())).setValue(class1);
         //subject
-        SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile");
+        SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile", 1);
         dbContext.addSubjectModel(sub);
+        mDatabase.child("Subject").child(String.valueOf(sub.getId())).setValue(sub);
         //subject of class
         SubjectOfClassModel subOfClass1 = SubjectOfClassModel.create(1, sub, class1, teacher1);
         dbContext.addSubjectOfClassModel(subOfClass1);
+        mDatabase.child("SubjectOfClass").child(String.valueOf(subOfClass1)).setValue(subOfClass1);
         //student of class
-        dbContext.addStudentOfClass(StudentOfClassModel.create(1, subOfClass1, stu1));
-        dbContext.addStudentOfClass(StudentOfClassModel.create(2, subOfClass1, stu2));
-        dbContext.addStudentOfClass(StudentOfClassModel.create(3, subOfClass1, stu3));
+        StudentOfClassModel stuClass1 = StudentOfClassModel.create(1, subOfClass1, stu1);
+        StudentOfClassModel stuClass2 = StudentOfClassModel.create(2, subOfClass1, stu2);
+        StudentOfClassModel stuClass3 = StudentOfClassModel.create(3, subOfClass1, stu3);
+        dbContext.addStudentOfClass(stuClass1);
+        dbContext.addStudentOfClass(stuClass2);
+        dbContext.addStudentOfClass(stuClass3);
+        mDatabase.child("StudentOfClass").child(String.valueOf(stuClass1.getId())).setValue(stuClass1);
+        mDatabase.child("StudentOfClass").child(String.valueOf(stuClass2.getId())).setValue(stuClass2);
+        mDatabase.child("StudentOfClass").child(String.valueOf(stuClass3.getId())).setValue(stuClass3);
         //temp lecture
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, 1);
@@ -209,25 +224,32 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addLectureModel(lec2);
         dbContext.addLectureModel(lec3);
         dbContext.addLectureModel(lec4);
-        mDatabase.child("lecture").child("1").setValue(lec1);
-        mDatabase.child("lecture").child("2").setValue(lec2);
-        mDatabase.child("lecture").child("3").setValue(lec3);
-        mDatabase.child("lecture").child("4").setValue(lec4);
+        mDatabase.child("lecture").child(String.valueOf(lec1.getId())).setValue(lec1);
+        mDatabase.child("lecture").child(String.valueOf(lec2.getId())).setValue(lec2);
+        mDatabase.child("lecture").child(String.valueOf(lec3.getId())).setValue(lec3);
+        mDatabase.child("lecture").child(String.valueOf(lec4.getId())).setValue(lec4);
         //attendance
-        dbContext.addAttendance(AttendanceModel.create(1, false, stu1, lec1));
-        dbContext.addAttendance(AttendanceModel.create(2, false, stu2, lec1));
-        dbContext.addAttendance(AttendanceModel.create(3, false, stu3, lec1));
-        dbContext.addAttendance(AttendanceModel.create(4, false, stu1, lec2));
-        dbContext.addAttendance(AttendanceModel.create(5, false, stu2, lec2));
-        dbContext.addAttendance(AttendanceModel.create(6, false, stu3, lec3));
-        dbContext.addAttendance(AttendanceModel.create(7, false, stu1, lec4));
-        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(1, false, stu1, lec1));
-        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(2, false, stu2, lec1));
-        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(3, false, stu3, lec1));
-        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(4, false, stu1, lec2));
-        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(5, false, stu2, lec2));
-        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(6, false, stu3, lec3));
-        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(7, false, stu1, lec4));
+        AttendanceModel attend1 = AttendanceModel.create(1, false, stu1, lec1);
+        AttendanceModel attend2 = AttendanceModel.create(2, false, stu2, lec1);
+        AttendanceModel attend3 = AttendanceModel.create(3, false, stu3, lec1);
+        AttendanceModel attend4 = AttendanceModel.create(4, false, stu1, lec2);
+        AttendanceModel attend5 = AttendanceModel.create(5, false, stu2, lec2);
+        AttendanceModel attend6 = AttendanceModel.create(6, false, stu3, lec3);
+        AttendanceModel attend7 = AttendanceModel.create(7, false, stu1, lec4);
+        dbContext.addAttendance(attend1);
+        dbContext.addAttendance(attend2);
+        dbContext.addAttendance(attend3);
+        dbContext.addAttendance(attend4);
+        dbContext.addAttendance(attend5);
+        dbContext.addAttendance(attend6);
+        dbContext.addAttendance(attend7);
+        mDatabase.child("attendance").child(String.valueOf(attend1.getId())).setValue(attend1);
+        mDatabase.child("attendance").child(String.valueOf(attend2.getId())).setValue(attend2);
+        mDatabase.child("attendance").child(String.valueOf(attend3.getId())).setValue(attend3);
+        mDatabase.child("attendance").child(String.valueOf(attend4.getId())).setValue(attend4);
+        mDatabase.child("attendance").child(String.valueOf(attend5.getId())).setValue(attend5);
+        mDatabase.child("attendance").child(String.valueOf(attend6.getId())).setValue(attend6);
+        mDatabase.child("attendance").child(String.valueOf(attend7.getId())).setValue(attend7);
     }
 
     private String BitMapToString(Bitmap bitmap) {
