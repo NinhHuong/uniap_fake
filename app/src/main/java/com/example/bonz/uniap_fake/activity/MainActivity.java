@@ -164,21 +164,21 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addAccount(accountModel2);
         dbContext.addAccount(accountModel3);
         dbContext.addAccount(accountModel4);
-//        mDatabase.child("Account").child(String.valueOf(accountModel1.getId())).setValue(accountModel1);
-//        mDatabase.child("Account").child(String.valueOf(accountModel2.getId())).setValue(accountModel2);
-//        mDatabase.child("Account").child(String.valueOf(accountModel3.getId())).setValue(accountModel3);
-//        mDatabase.child("Account").child(String.valueOf(accountModel4.getId())).setValue(accountModel4);
+        mDatabase.child("account").child(String.valueOf(accountModel1.getId())).setValue(accountModel1);
+        mDatabase.child("account").child(String.valueOf(accountModel2.getId())).setValue(accountModel2);
+        mDatabase.child("account").child(String.valueOf(accountModel3.getId())).setValue(accountModel3);
+        mDatabase.child("account").child(String.valueOf(accountModel4.getId())).setValue(accountModel4);
         //semester
         SemesterModel ses1 = SemesterModel.create(1, "Spring 2017", "05/01/2017", "30/04/2017");
         SemesterModel ses2 = SemesterModel.create(2, "Spring 2016", "05/01/2016", "30/04/2016");
         dbContext.addSemesterModel(ses1);
         dbContext.addSemesterModel(ses2);
-//        mDatabase.child("Semester").child(String.valueOf(ses1.getId())).setValue(ses1);
-//        mDatabase.child("Semester").child(String.valueOf(ses2.getId())).setValue(ses2);
+        mDatabase.child("semester").child(String.valueOf(ses1.getId())).setValue(ses1);
+        mDatabase.child("semester").child(String.valueOf(ses2.getId())).setValue(ses2);
         //temp teacher
         TeacherModel teacher1 = TeacherModel.create(1, "Bui", "Anh", "abc", "123", "TA123", null, accountModel4);
         dbContext.addTeacher(teacher1);
-        mDatabase.child("Teacher").child(String.valueOf(teacher1.getId())).setValue(teacher1);
+        mDatabase.child("teacher").child(String.valueOf(teacher1.getId())).setValue(teacher1);
         //temp student
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.huongntm5);
         StudentModel stu1 = StudentModel.create(1, "Nguyen", "hoa", "abc", "123", "SE03077", BitMapToString(bitmap), accountModel1);
@@ -187,21 +187,21 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addStudent(stu1);
         dbContext.addStudent(stu2);
         dbContext.addStudent(stu3);
-//        mDatabase.child("Student").child(String.valueOf(stu1.getId())).setValue(stu1);
-//        mDatabase.child("Student").child(String.valueOf(stu2.getId())).setValue(stu2);
-//        mDatabase.child("Student").child(String.valueOf(stu3.getId())).setValue(stu3);
+        mDatabase.child("student").child(String.valueOf(stu1.getId())).setValue(stu1);
+        mDatabase.child("student").child(String.valueOf(stu2.getId())).setValue(stu2);
+        mDatabase.child("student").child(String.valueOf(stu3.getId())).setValue(stu3);
         //temp class
         ClassModel class1 = ClassModel.create(5, "ES20102", ses1);
         dbContext.addClass(class1);
-//        mDatabase.child("Class").child(String.valueOf(class1.getId())).setValue(class1);
+       mDatabase.child("class").child(String.valueOf(class1.getId())).setValue(class1);
         //subject
         SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile", 1);
         dbContext.addSubjectModel(sub);
-//        mDatabase.child("Subject").child(String.valueOf(sub.getId())).setValue(sub);
+        mDatabase.child("subject").child(String.valueOf(sub.getId())).setValue(sub);
         //subject of class
         SubjectOfClassModel subOfClass1 = SubjectOfClassModel.create(1, sub, class1, teacher1);
         dbContext.addSubjectOfClassModel(subOfClass1);
-//        mDatabase.child("SubjectOfClass").child(String.valueOf(subOfClass1)).setValue(subOfClass1);
+        mDatabase.child("subject_of_class").child(String.valueOf(subOfClass1)).setValue(subOfClass1);
         //student of class
         StudentOfClassModel stuClass1 = StudentOfClassModel.create(1, subOfClass1, stu1);
         StudentOfClassModel stuClass2 = StudentOfClassModel.create(2, subOfClass1, stu2);
@@ -209,9 +209,9 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addStudentOfClass(stuClass1);
         dbContext.addStudentOfClass(stuClass2);
         dbContext.addStudentOfClass(stuClass3);
-//        mDatabase.child("StudentOfClass").child(String.valueOf(stuClass1.getId())).setValue(stuClass1);
-//        mDatabase.child("StudentOfClass").child(String.valueOf(stuClass2.getId())).setValue(stuClass2);
-//        mDatabase.child("StudentOfClass").child(String.valueOf(stuClass3.getId())).setValue(stuClass3);
+        mDatabase.child("student_of_c lass").child(String.valueOf(stuClass1.getId())).setValue(stuClass1);
+        mDatabase.child("student_of_class").child(String.valueOf(stuClass2.getId())).setValue(stuClass2);
+        mDatabase.child("student_of_class").child(String.valueOf(stuClass3.getId())).setValue(stuClass3);
         //temp lecture
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, 1);
@@ -223,10 +223,10 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addLectureModel(lec2);
         dbContext.addLectureModel(lec3);
         dbContext.addLectureModel(lec4);
-//        mDatabase.child("lecture").child(String.valueOf(lec1.getId())).setValue(lec1);
-//        mDatabase.child("lecture").child(String.valueOf(lec2.getId())).setValue(lec2);
-//        mDatabase.child("lecture").child(String.valueOf(lec3.getId())).setValue(lec3);
-//        mDatabase.child("lecture").child(String.valueOf(lec4.getId())).setValue(lec4);
+        mDatabase.child("lecture").child(String.valueOf(lec1.getId())).setValue(lec1);
+        mDatabase.child("lecture").child(String.valueOf(lec2.getId())).setValue(lec2);
+        mDatabase.child("lecture").child(String.valueOf(lec3.getId())).setValue(lec3);
+        mDatabase.child("lecture").child(String.valueOf(lec4.getId())).setValue(lec4);
         //attendance
         AttendanceModel attend1 = AttendanceModel.create(1, false, stu1, lec1);
         AttendanceModel attend2 = AttendanceModel.create(2, false, stu2, lec1);
@@ -242,13 +242,13 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addAttendance(attend5);
         dbContext.addAttendance(attend6);
         dbContext.addAttendance(attend7);
-//        mDatabase.child("attendance").child(String.valueOf(attend1.getId())).setValue(attend1);
-//        mDatabase.child("attendance").child(String.valueOf(attend2.getId())).setValue(attend2);
-//        mDatabase.child("attendance").child(String.valueOf(attend3.getId())).setValue(attend3);
-//        mDatabase.child("attendance").child(String.valueOf(attend4.getId())).setValue(attend4);
-//        mDatabase.child("attendance").child(String.valueOf(attend5.getId())).setValue(attend5);
-//        mDatabase.child("attendance").child(String.valueOf(attend6.getId())).setValue(attend6);
-//        mDatabase.child("attendance").child(String.valueOf(attend7.getId())).setValue(attend7);
+        mDatabase.child("attendance").child(String.valueOf(attend1.getId())).setValue(attend1);
+        mDatabase.child("attendance").child(String.valueOf(attend2.getId())).setValue(attend2);
+        mDatabase.child("attendance").child(String.valueOf(attend3.getId())).setValue(attend3);
+        mDatabase.child("attendance").child(String.valueOf(attend4.getId())).setValue(attend4);
+        mDatabase.child("attendance").child(String.valueOf(attend5.getId())).setValue(attend5);
+        mDatabase.child("attendance").child(String.valueOf(attend6.getId())).setValue(attend6);
+        mDatabase.child("attendance").child(String.valueOf(attend7.getId())).setValue(attend7);
     }
 
     private String BitMapToString(Bitmap bitmap) {
