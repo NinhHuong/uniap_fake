@@ -24,7 +24,6 @@ import io.realm.RealmResults;
  */
 
 public class DBContext {
-    private static DBContext inst;
     public Realm realm;
 
     public DBContext() {
@@ -49,7 +48,6 @@ public class DBContext {
         realm.commitTransaction();
     }
 
-    public List<AccountModel> getAllAccount() {
     public int getMaxAccountId() {
         try{
             return realm.where(AccountModel.class).max("id").intValue();
@@ -101,7 +99,6 @@ public class DBContext {
         return 0;
     }
 
-    public List<NewsModel> getAllNews(){
     public List<NewsModel> getAllNews() {
         return realm.where(NewsModel.class).findAll();
     }
@@ -197,7 +194,6 @@ public class DBContext {
         return realm.where(TeacherModel.class).equalTo("accountModel.id",id).findFirst();
     }
 
-    public List<TeacherModel> getAllTeacher(){
     public List<TeacherModel> getAllTeacher() {
         return realm.where(TeacherModel.class).findAll();
     }
@@ -421,6 +417,12 @@ public class DBContext {
         realm.beginTransaction();;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
+    }
+
+
+    public List<LectureModel> getAllLectureByDate(Date from, Date to) {
+        List<LectureModel> realmResults = realm.where(LectureModel.class).between("date", from, to).findAll();
+        return realmResults;
     }
 
     public int getMaxLectureId() {

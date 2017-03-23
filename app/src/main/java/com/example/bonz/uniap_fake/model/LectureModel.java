@@ -38,7 +38,7 @@ public class LectureModel extends RealmObject {
         return lecture;
     }
 
-    public static LectureModel createWithoutId(String date, int slot, SubjectOfClassModel subjectOfClassModel) {
+    public static LectureModel createWithoutId(Date date, int slot, SubjectOfClassModel subjectOfClassModel) {
         LectureModel lecture = new LectureModel();
         DBContext dbContext = DBContext.getInst();
         lecture.id = dbContext.getMaxLectureId() + 1;

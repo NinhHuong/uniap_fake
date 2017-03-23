@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 return true;
             }
         }
-        return true;
+        return false;
     }
 
     // Load Data After Login Success

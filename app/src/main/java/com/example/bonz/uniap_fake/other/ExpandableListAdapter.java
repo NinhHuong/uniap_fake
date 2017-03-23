@@ -63,7 +63,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         CheckBox ckbIsAttendance = (CheckBox) convertView.findViewById(R.id.ckb_is_attendance);
 
         txtNo.setText(String.valueOf(childPosition + 1));
-        txtDate.setText(attendanceModel.getLectureModel().getDate().toString());
+        txtDate.setText(Constanst.KEY_DATE_FORMAT.format(attendanceModel.getLectureModel().getDate()));
         txtTeacher.setText(attendanceModel.getLectureModel().getSubjectOfClassModel().getTeacherModel().getRollNumber());
         txtSlot.setText(String.valueOf(attendanceModel.getLectureModel().getSlot()));
         ckbIsAttendance.setChecked(attendanceModel.getIsAttendance());

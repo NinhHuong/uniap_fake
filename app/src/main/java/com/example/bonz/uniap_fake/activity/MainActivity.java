@@ -166,9 +166,6 @@ public class MainActivity extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         //account
 
-        AccountModel accountModel1 = AccountModel.create(1, "huongntmse03077", "", 1);
-        AccountModel accountModel2 = AccountModel.create(2, "anhbt", "123", 2);
-
         AccountModel accountModel1 = AccountModel.create(1, "hoa", "1", 1);
         AccountModel accountModel2 = AccountModel.create(2, "la", "1", 1);
         AccountModel accountModel3 = AccountModel.create(3, "canh", "1", 1);
@@ -189,12 +186,11 @@ public class MainActivity extends AppCompatActivity {
 //        mDatabase.child("semester").child(String.valueOf(ses1.getId())).setValue(ses1);
 //        mDatabase.child("semester").child(String.valueOf(ses2.getId())).setValue(ses2);
         //temp teacher
-        TeacherModel teacher1 = TeacherModel.create(5, 3, "Bui", "Anh", "abc", "123", "TA123", null);
-        TeacherModel teacher2 = TeacherModel.create(4, 3, "name", "Teacher 4", "abc", "123", "TA123", null);
-        TeacherModel teacher3 = TeacherModel.create(3, 3, "name", "Teacher 3", "abc", "123", "TA123", null);
-        TeacherModel teacher4 = TeacherModel.create(2, 3, "name", "Teacher 2", "abc", "123", "TA123", null);
-        TeacherModel teacher5 = TeacherModel.create(1, 3, "name", "Teacher 1", "abc", "123", "TA123", null);
-        TeacherModel teacher1 = TeacherModel.create(1, "Bui", "Anh", "abc", "123", "TA123", null, accountModel4);
+        TeacherModel teacher1 = TeacherModel.create(5, "Bui", "Anh", "abc", "123", "TA123", "", null);
+        TeacherModel teacher2 = TeacherModel.create(4, "name", "Teacher 4", "abc", "123", "TA123","", null);
+        TeacherModel teacher3 = TeacherModel.create(3, "name", "Teacher 3", "abc", "123", "TA123", "", null);
+        TeacherModel teacher4 = TeacherModel.create(2, "name", "Teacher 2", "abc", "123", "TA123", "", null);
+        TeacherModel teacher5 = TeacherModel.create(1, "name", "Teacher 1", "abc", "123", "TA123", "", null);
         dbContext.addTeacher(teacher1);
         dbContext.addTeacher(teacher2);
         dbContext.addTeacher(teacher3);
@@ -218,11 +214,10 @@ public class MainActivity extends AppCompatActivity {
 //       mDatabase.child("class").child(String.valueOf(class1.getId())).setValue(class1);
         //subject
         SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile", 1);
-        SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile");
-        SubjectModel sub1 = SubjectModel.create(2, "ESS", "Embed System");
-        SubjectModel sub2 = SubjectModel.create(3, "SSC", "Soft Skill Comunication");
-        SubjectModel sub3 = SubjectModel.create(4, "SPM", "Software Project Management");
-        SubjectModel sub4 = SubjectModel.create(5, "VNR", "Vietnam Revolution");
+        SubjectModel sub1 = SubjectModel.create(2, "ESS", "Embed System", 3);
+        SubjectModel sub2 = SubjectModel.create(3, "SSC", "Soft Skill Comunication",3);
+        SubjectModel sub3 = SubjectModel.create(4, "SPM", "Software Project Management",3);
+        SubjectModel sub4 = SubjectModel.create(5, "VNR", "Vietnam Revolution",3);
         dbContext.addSubjectModel(sub);
 //        mDatabase.child("subject").child(String.valueOf(sub.getId())).setValue(sub);
         dbContext.addSubjectModel(sub1);

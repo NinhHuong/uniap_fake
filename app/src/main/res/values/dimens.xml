@@ -13,4 +13,6 @@
     <dimen name="button_margin">10dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="lecture_text">17sp</dimen>
+    <dimen name="line_width">2dp</dimen>
 </resources>
