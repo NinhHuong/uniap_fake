@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     AccountModel model = ds.getValue(AccountModel.class);
                     listAccount.add(model);
-                    Log.d("test", "Value is: " + ds.getValue(AccountModel.class));
+                    //Log.d("test", "Value is: " + ds.getValue(AccountModel.class));
                 }
             }
 
@@ -133,20 +133,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //function onClick
     private void onClickLogin(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-//        if (!edtAccount.getText().toString().equals("") && !edtPassword.getText().toString().equals("")) {
-//            if (checkLogin()) {
-//                Intent intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
-//            } else {
-//                Snackbar.make(v, "Account & Password Incorrect !!!", Snackbar.LENGTH_SHORT)
-//                        .setAction("Action", null).show();
-//            }
-//        } else {
-//            Snackbar.make(v, "Enter Account & Password please !!!", Snackbar.LENGTH_SHORT)
-//                    .setAction("Action", null).show();
-//        }
+        if (!edtAccount.getText().toString().equals("") && !edtPassword.getText().toString().equals("")) {
+            if (checkLogin()) {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                Snackbar.make(v, "Account & Password Incorrect !!!", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+            }
+        } else {
+            Snackbar.make(v, "Enter Account & Password please !!!", Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+        }
 
 
     }
@@ -275,7 +273,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     dbContext.addSubjectOfClassModel(model);
 
                 }
-                //Log.d("testdata", "Value is: " + dbContext.getAllSubjectOfClassModel().toString());
+                //Log.d("testdata", "Value is: " + dbContext.getAllSubjectOfClassModel().get(0).getClassModel().toString());
 
             }
 
