@@ -30,7 +30,6 @@ import com.example.bonz.uniap_fake.dbcontext.DBContext;
 import com.example.bonz.uniap_fake.fragment.AttendanceFragment;
 import com.example.bonz.uniap_fake.fragment.NewsFragment;
 import com.example.bonz.uniap_fake.fragment.AttendanceStudentFragment;
-import com.example.bonz.uniap_fake.fragment.NewsFragment;
 
 import com.example.bonz.uniap_fake.fragment.NotificationsFragment;
 import com.example.bonz.uniap_fake.fragment.OnGoingClassFragment;
@@ -48,6 +47,8 @@ import com.example.bonz.uniap_fake.model.SubjectOfClassModel;
 import com.example.bonz.uniap_fake.model.TeacherModel;
 import com.example.bonz.uniap_fake.other.CircleTransform;
 import com.example.bonz.uniap_fake.other.Constanst;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
@@ -87,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
+    StudentModel infoAccountStudent;
+    TeacherModel infoAccountTeacher;
+
+    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("root");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +100,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        dbContext = DBContext.getInst();
+        //createSampleData();
+        accountModel = dbContext.getAllAccount().get(0);
+        if(accountModel.getRoll()==1){
+            infoAccountStudent = dbContext.getAllStudent().get(0);
+        }else  if(accountModel.getRoll()==2){
+            infoAccountTeacher = dbContext.getAllTeacher().get(0);
+        }
+
 
         mHandler = new Handler();
 
@@ -140,12 +156,11 @@ public class MainActivity extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         //account
 
-        AccountModel accountModel1 = AccountModel.create(1, "hoa", "", 1);
-        AccountModel accountModel2 = AccountModel.create(2, "la", "", 1);
-        AccountModel accountModel3 = AccountModel.create(3, "canh", "", 1);
-        AccountModel accountModel4 = AccountModel.create(4, "anhbt", "", 2);
 
-        //mDatabase.child("account").child(id).setValue(accountModel1);
+        AccountModel accountModel1 = AccountModel.create(1, "hoa", "1", 1);
+        AccountModel accountModel2 = AccountModel.create(2, "la", "1", 1);
+        AccountModel accountModel3 = AccountModel.create(3, "canh", "1", 1);
+        AccountModel accountModel4 = AccountModel.create(4, "anhbt", "1", 2);
         dbContext.addAccount(accountModel1);
         dbContext.addAccount(accountModel2);
         dbContext.addAccount(accountModel3);
@@ -169,8 +184,12 @@ public class MainActivity extends AppCompatActivity {
         //temp class
         ClassModel class1 = ClassModel.create(5, "ES20102", ses1);
         dbContext.addClass(class1);
+        //student of class
+        dbContext.addStudentOfClass(StudentOfClassModel.create(1, class1, stu1));
+        dbContext.addStudentOfClass(StudentOfClassModel.create(2, class1, stu2));
+        dbContext.addStudentOfClass(StudentOfClassModel.create(3, class1, stu3));
         //subject
-        SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile", 3);
+        SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile");
         dbContext.addSubjectModel(sub);
         //subject of class
         SubjectOfClassModel subOfClass1 = SubjectOfClassModel.create(1, sub, class1, teacher1);
@@ -190,6 +209,10 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addLectureModel(lec2);
         dbContext.addLectureModel(lec3);
         dbContext.addLectureModel(lec4);
+        mDatabase.child("lecture").child("1").setValue(lec1);
+        mDatabase.child("lecture").child("2").setValue(lec2);
+        mDatabase.child("lecture").child("3").setValue(lec3);
+        mDatabase.child("lecture").child("4").setValue(lec4);
         //attendance
         dbContext.addAttendance(AttendanceModel.create(1, false, stu1, lec1));
         dbContext.addAttendance(AttendanceModel.create(2, false, stu2, lec1));
@@ -198,6 +221,13 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addAttendance(AttendanceModel.create(5, false, stu2, lec2));
         dbContext.addAttendance(AttendanceModel.create(6, false, stu3, lec3));
         dbContext.addAttendance(AttendanceModel.create(7, false, stu1, lec4));
+        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(1, false, stu1, lec1));
+        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(2, false, stu2, lec1));
+        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(3, false, stu3, lec1));
+        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(4, false, stu1, lec2));
+        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(5, false, stu2, lec2));
+        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(6, false, stu3, lec3));
+        mDatabase.child("attendance").child("1").setValue(AttendanceModel.create(7, false, stu1, lec4));
     }
 
     private String BitMapToString(Bitmap bitmap) {
@@ -208,6 +238,18 @@ public class MainActivity extends AppCompatActivity {
         return temp;
     }
 
+    private Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+                    encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
     /***
      * Load navigation menu header information
      * like background image, profile image
@@ -215,8 +257,16 @@ public class MainActivity extends AppCompatActivity {
      */
     private void loadNavHeader() {
         // name, website
-        txtName.setText("Ravi Tamada");
-        txtWebsite.setText("www.androidhive.info");
+        if(accountModel.getRoll()==1){
+            txtName.setText(infoAccountStudent.getFirstName()+" "+infoAccountStudent.getLastName());
+            txtWebsite.setText(infoAccountStudent.getRollNumber());
+            imgProfile.setImageBitmap(StringToBitMap(infoAccountStudent.getPhoto()));
+        }else  if(accountModel.getRoll()==2){
+            txtName.setText(infoAccountTeacher.getFirstName()+" "+infoAccountTeacher.getLastName());
+            txtWebsite.setText(infoAccountTeacher.getRollNumber());
+            imgProfile.setImageBitmap(StringToBitMap(infoAccountTeacher.getPhoto()));
+        }
+
 
         // loading header background image
         Glide.with(this).load(urlNavHeaderBg)
@@ -225,12 +275,12 @@ public class MainActivity extends AppCompatActivity {
                 .into(imgNavHeaderBg);
 
         // Loading profile image
-        Glide.with(this).load(urlProfileImg)
-                .crossFade()
-                .thumbnail(0.5f)
-                .bitmapTransform(new CircleTransform(this))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgProfile);
+//        Glide.with(this).load(urlProfileImg)
+//                .crossFade()
+//                .thumbnail(0.5f)
+//                .bitmapTransform(new CircleTransform(this))
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(imgProfile);
 
         // showing dot next to notifications label
         navigationView.getMenu().getItem(1).setActionView(R.layout.menu_dot);
