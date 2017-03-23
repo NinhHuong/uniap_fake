@@ -50,7 +50,6 @@ import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -137,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         //account
 
         AccountModel accountModel1 = AccountModel.create(1, "huongntmse03077", "", 1);
-        AccountModel accountModel2 = AccountModel.create(2, "anhbt", "", 2);
+        AccountModel accountModel2 = AccountModel.create(2, "anhbt", "123", 2);
 
         //mDatabase.child("account").child(id).setValue(accountModel1);
         dbContext.addAccount(accountModel1);
@@ -149,7 +148,15 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addSemesterModel(ses2);
         //temp teacher
         TeacherModel teacher1 = TeacherModel.create(5, 3, "Bui", "Anh", "abc", "123", "TA123", null);
+        TeacherModel teacher2 = TeacherModel.create(4, 3, "name", "Teacher 4", "abc", "123", "TA123", null);
+        TeacherModel teacher3 = TeacherModel.create(3, 3, "name", "Teacher 3", "abc", "123", "TA123", null);
+        TeacherModel teacher4 = TeacherModel.create(2, 3, "name", "Teacher 2", "abc", "123", "TA123", null);
+        TeacherModel teacher5 = TeacherModel.create(1, 3, "name", "Teacher 1", "abc", "123", "TA123", null);
         dbContext.addTeacher(teacher1);
+        dbContext.addTeacher(teacher2);
+        dbContext.addTeacher(teacher3);
+        dbContext.addTeacher(teacher4);
+        dbContext.addTeacher(teacher5);
         //temp student
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.huongntm5);
         StudentModel stu1 = StudentModel.create(1, 1, "Ninh", "Huong", "abc", "123", "SE03077", BitMapToString(bitmap));
@@ -167,21 +174,38 @@ public class MainActivity extends AppCompatActivity {
         dbContext.addStudentOfClass(StudentOfClassModel.create(3, class1, stu3));
         //subject
         SubjectModel sub = SubjectModel.create(1, "PRM", "Mobile");
+        SubjectModel sub1 = SubjectModel.create(2, "ESS", "Embed System");
+        SubjectModel sub2 = SubjectModel.create(3, "SSC", "Soft Skill Comunication");
+        SubjectModel sub3 = SubjectModel.create(4, "SPM", "Software Project Management");
+        SubjectModel sub4 = SubjectModel.create(5, "VNR", "Vietnam Revolution");
         dbContext.addSubjectModel(sub);
+        dbContext.addSubjectModel(sub1);
+        dbContext.addSubjectModel(sub2);
+        dbContext.addSubjectModel(sub3);
+        dbContext.addSubjectModel(sub4);
         //subject of class
         SubjectOfClassModel subOfClass1 = SubjectOfClassModel.create(1, sub, class1, teacher1);
+        SubjectOfClassModel subOfClass2 = SubjectOfClassModel.create(2, sub1, class1, teacher2);
+        SubjectOfClassModel subOfClass3 = SubjectOfClassModel.create(3, sub2, class1, teacher3);
+        SubjectOfClassModel subOfClass4 = SubjectOfClassModel.create(4, sub3, class1, teacher4);
+        SubjectOfClassModel subOfClass5 = SubjectOfClassModel.create(5, sub4, class1, teacher5);
         dbContext.addSubjectOfClassModel(subOfClass1);
+        dbContext.addSubjectOfClassModel(subOfClass2);
+        dbContext.addSubjectOfClassModel(subOfClass3);
+        dbContext.addSubjectOfClassModel(subOfClass4);
+        dbContext.addSubjectOfClassModel(subOfClass5);
         //temp lecture
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, 1);
-        LectureModel lec1 = LectureModel.create(1, new Date(), 1, subOfClass1);
-        LectureModel lec2 = LectureModel.create(2, new Date(), 2, subOfClass1);
-        LectureModel lec3 = LectureModel.create(3, c.getTime(), 4, subOfClass1);
-        LectureModel lec4 = LectureModel.create(4, c.getTime(), 6, subOfClass1);
+        LectureModel lec1 = LectureModel.create(1, c.getTime(), 5, subOfClass1);
+        LectureModel lec2 = LectureModel.create(2, c.getTime(), 6, subOfClass1);
+        LectureModel lec3 = LectureModel.create(3, c.getTime(), 1, subOfClass3);
+        LectureModel lec4 = LectureModel.create(4, c.getTime(), 2, subOfClass4);
         c.add(Calendar.DAY_OF_WEEK, 3);
-        LectureModel lec5 = LectureModel.create(5, c.getTime(), 2, subOfClass1);
+        LectureModel lec5 = LectureModel.create(5, c.getTime(), 3, subOfClass5);
         c.add(Calendar.DAY_OF_WEEK, 5);
-        LectureModel lec6 = LectureModel.create(6, c.getTime(), 3, subOfClass1);
+        LectureModel lec6 = LectureModel.create(6, c.getTime(), 4, subOfClass1);
+        LectureModel lec7 = LectureModel.create(7, c.getTime(), 5, subOfClass1);
         dbContext.addLectureModel(lec1);
         dbContext.addLectureModel(lec2);
         dbContext.addLectureModel(lec3);

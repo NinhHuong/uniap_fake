@@ -304,7 +304,6 @@ public class DBContext {
     //SemesterModel
     public void addSemesterModel(SemesterModel model) {
         realm.beginTransaction();
-        ;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
@@ -341,7 +340,6 @@ public class DBContext {
     //LectureModel
     public void addLectureModel(LectureModel model) {
         realm.beginTransaction();
-        ;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
@@ -351,7 +349,8 @@ public class DBContext {
     }
 
     public List<LectureModel> getAllLectureByDate(Date from, Date to) {
-        return realm.where(LectureModel.class).between("date", from, to).findAll();
+        List<LectureModel> realmResults = realm.where(LectureModel.class).between("date", from, to).findAll();
+        return realmResults;
     }
 
     public LectureModel getLectureModelById(int id) {
@@ -386,7 +385,6 @@ public class DBContext {
     //SubjectOfClassModel
     public void addSubjectOfClassModel(SubjectOfClassModel model) {
         realm.beginTransaction();
-        ;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
@@ -423,7 +421,6 @@ public class DBContext {
     //SubjectModel
     public void addSubjectModel(SubjectModel model) {
         realm.beginTransaction();
-        ;
         realm.copyToRealmOrUpdate(model);
         realm.commitTransaction();
     }
